@@ -1324,6 +1324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grassTerrainSR: {fileID: 232309565}
   grassTerrainSlider: {fileID: 2084336687}
+  levelData: {fileID: 11400000, guid: 5150b798c331af149b71b2f2101f7e65, type: 2}
 --- !u!1 &2084336685
 GameObject:
   m_ObjectHideFlags: 0

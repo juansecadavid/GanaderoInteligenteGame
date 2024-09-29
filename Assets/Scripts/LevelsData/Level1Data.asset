@@ -13,3 +13,12 @@ MonoBehaviour:
   m_Name: Level1Data
   m_EditorClassIdentifier: 
   levelIndex: 0
+  regerationTime: 6
+  regenerationPercentage: 10
+  degradationTime: 8
+  degradationPercentage: 5
+  cowsCount: 14
+  feedPercentage: 2
+  seedsCount: 3
+  seedsRegenerationPercentage: 5
+  sowingTime: 2
