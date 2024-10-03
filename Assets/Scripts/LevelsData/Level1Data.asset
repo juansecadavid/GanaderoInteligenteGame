@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c1d44bebfd8dc4b89f01a8516be817, type: 3}
+  m_Name: Level1Data
+  m_EditorClassIdentifier: 
+  levelIndex: 0
+  regerationTime: 6
+  regenerationPercentage: 10
+  degradationTime: 8
+  degradationPercentage: 5
+  cowsCount: 14
+  feedPercentage: 2
+  seedsCount: 3
+  seedsRegenerationPercentage: 5
+  sowingTime: 2
