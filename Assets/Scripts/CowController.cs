@@ -21,15 +21,22 @@ public class CowController : MonoBehaviour
     float timeToFirstSpawn;
 
     float timeToLastSpawn;
+
+    private Coroutine _coroutine;
     
     // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
         totalLevelTime = _levelSettings.gameLevelSettings.levelDuration;
         _poolLenght = _levelSettings.gameLevelSettings.totalCows;
         timeToFirstSpawn = _levelSettings.cowSettings.timeToSpawnFirstCow;
         timeToLastSpawn = _levelSettings.cowSettings.timeToLastSpawn;
         _cowPool = _poolingAndEnabling.InstantiatePool(_poolLenght,_cowPrefab);
-        StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,totalLevelTime, timeToFirstSpawn,timeToLastSpawn,_cowPool));
+        _coroutine = StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,totalLevelTime, timeToFirstSpawn,timeToLastSpawn,_cowPool));
+    }
+
+    public void Conclude()
+    {
+        StopCoroutine(_coroutine);
     }
 }

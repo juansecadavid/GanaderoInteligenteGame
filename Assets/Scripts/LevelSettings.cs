@@ -27,6 +27,15 @@ public class LevelSettings : ScriptableObject
         public int percentajeToFirstSpawn = 20;
         
     }
+
+    [System.Serializable]
+    public class TerrainSettings
+    {
+        public float regerationTime;
+        public float regenerationPercentage;
+        public float degradationPercentage;
+        public float degradationTime;
+    }
     
     [System.Serializable]
     public class GameLevelSettings
@@ -35,7 +44,8 @@ public class LevelSettings : ScriptableObject
         public int totalCows = 3;
         public int totalSeeds = 3;
     }
-    
+
+    public TerrainSettings terrainSettings;
     public CowSettings cowSettings;
     public GameLevelSettings gameLevelSettings;
     public SeedSettings seedSettings;

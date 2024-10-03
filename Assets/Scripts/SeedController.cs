@@ -17,7 +17,7 @@ public class SeedController : MonoBehaviour
 
     float timeToLastSpawn;
     // Start is called before the first frame update
-    void Start()
+    public void Initialize()
     {
         _poolLenght = _levelSettings.gameLevelSettings.totalSeeds;
         timeToLastSpawn = _levelSettings.seedSettings.timeToLastSpawn;
@@ -32,6 +32,11 @@ public class SeedController : MonoBehaviour
             float timeLeft = _levelSettings.gameLevelSettings.levelDuration - Time.time;
             StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,timeLeft, 0f,timeToLastSpawn,_seedPool));
         }
+        
+    }
+
+    public void Conclude()
+    {
         
     }
 }

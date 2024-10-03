@@ -8,6 +8,7 @@ public class TerrainController : MonoBehaviour
     [SerializeField] private SpriteRenderer grassTerrainSR;
     [SerializeField] private Slider grassTerrainSlider;
     [SerializeField] private LevelDataController levelData;
+    [SerializeField] private LevelSettings _levelSettings;
 
     private float initialTerrainSize;
     private float regenerationRate;
@@ -17,19 +18,19 @@ public class TerrainController : MonoBehaviour
     private bool isCowFed;
     private bool isSeedPlanted;
 
-    private void Awake()
+    public void Initialize()
     {
         initialTerrainSize = grassTerrainSR.size.y;
-        regenerationRate = levelData.regenerationPercentage / 100f * initialTerrainSize;
-        degradationRate = levelData.degradationPercentage / 100f * initialTerrainSize;
+        regenerationRate = _levelSettings.terrainSettings.regenerationPercentage / 100f * initialTerrainSize;
+        degradationRate = _levelSettings.terrainSettings.degradationPercentage / 100f * initialTerrainSize;
 
         grassTerrainSlider.maxValue = initialTerrainSize;
         grassTerrainSlider.value = initialTerrainSize;
 
         grassTerrainSlider.onValueChanged.AddListener(OnGrassValueChanged);
 
-        grassTerrainSlider.value = 0;
-        currentGrassSize = 0;
+        grassTerrainSlider.value = 5.15f;
+        currentGrassSize = 5.15f;
 
         StartCoroutine(ManageTerrainRegeneration());
         //StartCoroutine(ManageCows());
@@ -46,7 +47,7 @@ public class TerrainController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(levelData.regerationTime);  // Cada 6 segundos
+            yield return new WaitForSeconds(_levelSettings.terrainSettings.regerationTime);  // Cada 6 segundos
             UpdateTerrainSize(currentGrassSize + regenerationRate);
         }
     }
@@ -58,6 +59,11 @@ public class TerrainController : MonoBehaviour
         grassTerrainSlider.value = currentGrassSize;
     }
 
+    public void Conclude()
+    {
+        
+    }
+
     //private IEnumerator ManageCows()
     //{
     //    cowsAppeared = 0;
@@ -67,7 +73,7 @@ public class TerrainController : MonoBehaviour
     //    while (cowsAppeared < levelData.cowsCount)
     //    {
     //        cowsAppeared++;
-    //        Debug.Log("Vaca apareció: " + cowsAppeared);
+    //        Debug.Log("Vaca apareciÃ³: " + cowsAppeared);
     //        yield return new WaitForSeconds(cowInterval);
     //    }
     //}
@@ -107,7 +113,7 @@ public class TerrainController : MonoBehaviour
     //    yield return new WaitForSeconds(levelData.sowingTime);  // Tiempo de siembra de 2 segundos
     //    float seedRegeneration = (levelData.seedsRegenerationPercentage / 100f * initialTerrainSize);
     //    regenerationRate += seedRegeneration;
-    //    Debug.Log("Semilla plantada, regeneración aumentada: " + regenerationRate);
+    //    Debug.Log("Semilla plantada, regeneraciÃ³n aumentada: " + regenerationRate);
     //    isSeedPlanted = false;
     //}
 }
