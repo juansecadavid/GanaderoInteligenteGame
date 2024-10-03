@@ -1,47 +1,22 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class CowPooling : MonoBehaviour
+public class PoolingAndEnabling : MonoBehaviour
 {
-    [SerializeField] private LevelSettings _levelSettings;
-    
-    [SerializeField] private GameObject _prefab;
-
-    [SerializeField] private int _poolLenght;
-
-    [SerializeField] private List<GameObject> _poolElements;
-
-    float totalLevelTime;
-
-    float timeToFirstSpawn;
-
-    float timeToLastSpawn;
-    
-    // Start is called before the first frame update
-    void Start()
+    public List<GameObject> InstantiatePool(int x, GameObject gameObject)
     {
-        totalLevelTime = _levelSettings.gameLevelSettings.levelDuration;
-        _poolLenght = _levelSettings.gameLevelSettings.totalCows;
-        timeToFirstSpawn = _levelSettings.cowSettings.timeToSpawnFirstCow;
-        timeToLastSpawn = _levelSettings.cowSettings.timeToLastSpawn;
-        InstantiatePool();
-        StartCoroutine(PrintRandomTimes(_poolLenght,totalLevelTime, timeToFirstSpawn,timeToLastSpawn));
-    }
-
-    private void InstantiatePool()
-    {
-        for (int i = 0; i < _poolLenght; i++)
+        List<GameObject> instantiatedList = new List<GameObject>();
+        for (int i = 0; i < x; i++)
         {
-            GameObject clone = Instantiate(_prefab, transform.parent);
+            GameObject clone = Instantiate(gameObject);
             clone.SetActive(false);
-            _poolElements.Add(clone);
+            instantiatedList.Add(clone);
         }
+        return instantiatedList;
     }
-    
-    IEnumerator PrintRandomTimes(int x, float y, float e, float p)
+
+    public IEnumerator ShowRandomTimes(int x, float y, float e, float p, List<GameObject> gameObjectsList)
     {
         // Validación de parámetros
         if (x <= 0 || y <= 0 || e < 0 || p < 0 || e + p >= y)
@@ -74,7 +49,7 @@ public class CowPooling : MonoBehaviour
             float waitTime = times[i] - previousTime;
             yield return new WaitForSeconds(waitTime);
             previousTime = times[i];
-            _poolElements[i].SetActive(true);
+            gameObjectsList[i].SetActive(true);
             Debug.Log("Impresión " + (i + 1) + " en el tiempo " + times[i]);
         }
     }

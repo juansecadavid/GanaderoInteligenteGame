@@ -7,55 +7,29 @@ using Random = UnityEngine.Random;
 
 public class CowController : MonoBehaviour
 {
-    [SerializeField] private int numberOfHitMax;
+    [SerializeField] private PoolingAndEnabling _poolingAndEnabling;
+    [SerializeField] private LevelSettings _levelSettings;
+    
+    [SerializeField] private GameObject _cowPrefab;
 
-    [SerializeField] private int numberOfHitMin;
+    private int _poolLenght;
 
-    private int numberOfHits;
+    private List<GameObject> _cowPool;
 
-    private Vector2 _targetPoint;
+    float totalLevelTime;
 
-    private Rigidbody2D _rigidbody2D;
+    float timeToFirstSpawn;
+
+    float timeToLastSpawn;
     
     // Start is called before the first frame update
     void Start()
     {
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        SetHitNumbers();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //_rigidbody2D.MovePosition();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        print("Algo me pegó");
-        if (other.gameObject.CompareTag("Player"))
-        {
-            print("Me pegó el jugador");
-            numberOfHits--;
-            if (numberOfHits <= 0)
-            {
-                GoToCorral();
-            }
-        }
-    }
-
-    private void SetHitNumbers()
-    {
-        numberOfHits = Random.Range(numberOfHitMin, numberOfHitMax);
-    }
-    
-    private void GoToCorral()
-    {
-        print("Me voy para el corral");
-    }
-
-    private void SetTargetPoint()
-    {
-        _targetPoint = new Vector2(Random.Range(-3f, 8f), Random.Range(-4.3f,2f));
+        totalLevelTime = _levelSettings.gameLevelSettings.levelDuration;
+        _poolLenght = _levelSettings.gameLevelSettings.totalCows;
+        timeToFirstSpawn = _levelSettings.cowSettings.timeToSpawnFirstCow;
+        timeToLastSpawn = _levelSettings.cowSettings.timeToLastSpawn;
+        _cowPool = _poolingAndEnabling.InstantiatePool(_poolLenght,_cowPrefab);
+        StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,totalLevelTime, timeToFirstSpawn,timeToLastSpawn,_cowPool));
     }
 }
