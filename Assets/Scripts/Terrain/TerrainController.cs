@@ -7,35 +7,31 @@ public class TerrainController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer grassTerrainSR;
     [SerializeField] private Slider grassTerrainSlider;
-    [SerializeField] private LevelDataController levelData;
     [SerializeField] private LevelSettings _levelSettings;
 
-    private float initialTerrainSize;
+    [SerializeField] private float minTerrainValue;
+    [SerializeField] private float maxTerrainValue;
+
     private float regenerationRate;
-    private float degradationRate;
-    private int cowsAppeared;
     private float currentGrassSize;
-    private bool isCowFed;
-    private bool isSeedPlanted;
+    private float terrainRange; // Rango entre min y max
 
     public void Initialize()
     {
-        initialTerrainSize = grassTerrainSR.size.y;
-        regenerationRate = _levelSettings.terrainSettings.regenerationPercentage / 100f * initialTerrainSize;
-        degradationRate = _levelSettings.terrainSettings.degradationPercentage / 100f * initialTerrainSize;
+        terrainRange = maxTerrainValue - minTerrainValue;
 
-        grassTerrainSlider.maxValue = initialTerrainSize;
-        grassTerrainSlider.value = initialTerrainSize;
+        regenerationRate = (_levelSettings.terrainSettings.regenerationPercentage / 100f) * terrainRange;
+
+        grassTerrainSlider.minValue = minTerrainValue;
+        grassTerrainSlider.maxValue = maxTerrainValue;
+
+        currentGrassSize = minTerrainValue;
+        grassTerrainSlider.value = currentGrassSize;
 
         grassTerrainSlider.onValueChanged.AddListener(OnGrassValueChanged);
-
-        grassTerrainSlider.value = 5.15f;
-        currentGrassSize = 5.15f;
+        OnGrassValueChanged(minTerrainValue);
 
         StartCoroutine(ManageTerrainRegeneration());
-        //StartCoroutine(ManageCows());
-        //StartCoroutine(ManageTerrainDegradation());
-        //StartCoroutine(ManageFeedConsumption());
     }
 
     private void OnGrassValueChanged(float value)
@@ -45,76 +41,29 @@ public class TerrainController : MonoBehaviour
 
     private IEnumerator ManageTerrainRegeneration()
     {
-        while (true)
+        while (currentGrassSize < maxTerrainValue)
         {
-            yield return new WaitForSeconds(_levelSettings.terrainSettings.regerationTime);  // Cada 6 segundos
+            yield return new WaitForSeconds(_levelSettings.terrainSettings.regerationTime);
+
             UpdateTerrainSize(currentGrassSize + regenerationRate);
         }
     }
 
     private void UpdateTerrainSize(float newSize)
     {
-        currentGrassSize = newSize;
+        currentGrassSize = Mathf.Clamp(newSize, minTerrainValue, maxTerrainValue);
+
         grassTerrainSR.size = new Vector2(grassTerrainSR.size.x, currentGrassSize);
         grassTerrainSlider.value = currentGrassSize;
     }
 
     public void Conclude()
     {
-        
+        grassTerrainSlider.onValueChanged.RemoveListener(OnGrassValueChanged);
+
+        StopAllCoroutines();
     }
-
-    //private IEnumerator ManageCows()
-    //{
-    //    cowsAppeared = 0;
-    //    float cowInterval = (levelData.degradationTime - 6f) / levelData.cowsCount;  // Espaciadas en el tiempo
-    //    yield return new WaitForSeconds(2f);  // Primera vaca aparece a los 2 segundos
-
-    //    while (cowsAppeared < levelData.cowsCount)
-    //    {
-    //        cowsAppeared++;
-    //        Debug.Log("Vaca apareció: " + cowsAppeared);
-    //        yield return new WaitForSeconds(cowInterval);
-    //    }
-    //}
-
-    //private IEnumerator ManageTerrainDegradation()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(levelData.degradationTime);  // Cada 8 segundos
-    //        UpdateTerrainSize(currentGrassSize - degradationRate);
-    //    }
-    //}
-
-    //private IEnumerator ManageFeedConsumption()
-    //{
-    //    while (true)
-    //    {
-    //        yield return new WaitForSeconds(2f);  // Cada 2 segundos
-    //        if (!isCowFed)  // Si no se alimenta la vaca
-    //        {
-    //            UpdateTerrainSize(currentGrassSize - (levelData.feedPercentage / 100f * initialTerrainSize));
-    //        }
-    //    }
-    //}
-
-    //public void PlantSeed()
-    //{
-    //    if (!isSeedPlanted)
-    //    {
-    //        isSeedPlanted = true;
-    //        StartCoroutine(SowSeed());
-    //    }
-    //}
-
-    //private IEnumerator SowSeed()
-    //{
-    //    yield return new WaitForSeconds(levelData.sowingTime);  // Tiempo de siembra de 2 segundos
-    //    float seedRegeneration = (levelData.seedsRegenerationPercentage / 100f * initialTerrainSize);
-    //    regenerationRate += seedRegeneration;
-    //    Debug.Log("Semilla plantada, regeneración aumentada: " + regenerationRate);
-    //    isSeedPlanted = false;
-    //}
 }
+
+
 

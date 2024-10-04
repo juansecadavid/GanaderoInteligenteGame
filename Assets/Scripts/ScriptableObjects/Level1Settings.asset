@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574393eed427ce944b2386d4941eb67e, type: 3}
   m_Name: Level1Settings
   m_EditorClassIdentifier: 
+  terrainSettings:
+    regerationTime: 6
+    regenerationPercentage: 10
+    degradationPercentage: 8
+    degradationTime: 5
   cowSettings:
-    effectsVolume: 0.5
+    timeToSpawnFirstCow: 2
+    timeToLastSpawn: 4
+    minimunHitsToGo: 3
+    maximumHitsToGo: 6
   gameLevelSettings:
     levelDuration: 60
     totalCows: 14
-    resolutionHeight: 1080
-    fullScreen: 1
+    totalSeeds: 3
+  seedSettings:
+    timeToLastSpawn: 10
+    percentajeToFirstSpawn: 20
