@@ -22,7 +22,8 @@ public class TerrainController : MonoBehaviour
     {
         terrainRange = maxTerrainValue - minTerrainValue;
 
-        regenerationRate = (_levelSettings.terrainSettings.regenerationPercentage / 100f) * terrainRange;
+        regenerationRate = 0;
+        UpdateRegenerationRate(_levelSettings.terrainSettings.regenerationPercentage);
 
         grassTerrainSlider.minValue = minTerrainValue;
         grassTerrainSlider.maxValue = maxTerrainValue;
@@ -50,6 +51,11 @@ public class TerrainController : MonoBehaviour
 
             AddToTarget(regenerationRate);
         }
+    }
+
+    public void UpdateRegenerationRate(float value)
+    {
+        regenerationRate += (value / 100f) * terrainRange;
     }
 
     public void UpdateTerrain(float value)
@@ -93,6 +99,12 @@ public class TerrainController : MonoBehaviour
         isUpdating = false;
     }
 
+    public float GetCurrentTerrainPercentage()
+    {
+        float percentage = (currentGrassSize - minTerrainValue) / terrainRange * 100f;
+        return percentage;
+    }
+
     public void Conclude()
     {
         grassTerrainSlider.onValueChanged.RemoveListener(OnGrassValueChanged);
@@ -106,5 +118,6 @@ public class TerrainController : MonoBehaviour
         int randomValue = Random.Range(-10, 10);
         print("TestUpdateTerrain: " + randomValue);
         UpdateTerrain(randomValue);
+        
     }
 }
