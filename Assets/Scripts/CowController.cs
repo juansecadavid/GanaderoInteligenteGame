@@ -32,6 +32,10 @@ public class CowController : MonoBehaviour
         timeToFirstSpawn = _levelSettings.cowSettings.timeToSpawnFirstCow;
         timeToLastSpawn = _levelSettings.cowSettings.timeToLastSpawn;
         _cowPool = _poolingAndEnabling.InstantiatePool(_poolLenght,_cowPrefab);
+        foreach (GameObject cow in _cowPool)
+        {
+            cow.GetComponent<Cow>().Initialize();
+        }
         _coroutine = StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,totalLevelTime, timeToFirstSpawn,timeToLastSpawn,_cowPool));
     }
 

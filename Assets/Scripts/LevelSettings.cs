@@ -16,6 +16,10 @@ public class LevelSettings : ScriptableObject
         public int minimunHitsToGo = 3;
         [Tooltip("Numero de toques maximos necesarios para que la vaca vaya hacia el corral.")]
         public int maximumHitsToGo = 6;
+        [Tooltip("Cuantos segundos deben pasar para que la vaca se coma el terreno.")]
+        public float timeToEatTerrain = 2;
+        [Tooltip("Cuanto porcentaje daña la vaca al comer.")]
+        public float percentajeWhenEat = 2;
     }
 
     [System.Serializable]
@@ -25,7 +29,10 @@ public class LevelSettings : ScriptableObject
         public int timeToLastSpawn = 10;
         [Tooltip("Porcentaje del terreno para la aparición de la primera semilla")]
         public int percentajeToFirstSpawn = 20;
-        
+        [Tooltip("Porcentaje que se incrementará la regeneracion del terreno por cada semilla")]
+        public int percentajeToRegenerationIncrease = 5;
+        [Tooltip("Tiempo que se demora en plantar la semilla (El jugador no se podrá mover durante este tiempo)")]
+        public int timeToPlant = 2;
     }
 
     [System.Serializable]

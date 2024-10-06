@@ -15,12 +15,19 @@ public class LevelController : MonoBehaviour
     void Start()
     {
         Initialize();
+        Cow.eatTerrain += EatTerrain;
+        Seed.increaseRegeneration += IncreaseRegeneration;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void EatTerrain(float percent,GameObject cow)
     {
-        
+        //IMplementar que se baje el terreno
+        //print($"Comer {percent}% de terreno");
+    }
+
+    public void IncreaseRegeneration(float regenerationPercentajeToIncrease)
+    {
+        //Implementar que ahora la regeneracion sube su porcentaje
     }
 
     public void Initialize()

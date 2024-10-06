@@ -50,7 +50,7 @@ public class PoolingAndEnabling : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
             previousTime = times[i];
             gameObjectsList[i].SetActive(true);
-            Debug.Log("Impresión " + (i + 1) + " en el tiempo " + times[i]);
+            //Debug.Log("Impresión " + (i + 1) + " en el tiempo " + times[i]);
         }
     }
 }

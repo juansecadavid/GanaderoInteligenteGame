@@ -4,28 +4,13 @@ using UnityEngine;
 
 public class RandomPointInSquare : MonoBehaviour
 {
-
-    // Offset desde los bordes de la cámara
     public float offsetFromEdge = 0f;
-
-    // Tamaño de la zona a evitar cerca de la esquina superior izquierda
     public float avoidAreaSize = 2f;
-
-    // Variable para ajustar qué tan cerca o lejos de la esquina superior izquierda evitar
     public float cornerAvoidanceOffset = 0f;
-
-    // Para visualizar los gizmos
     public bool showGizmos2 = true;
-
-    // Lista interna para almacenar los bordes válidos
     private List<EdgeInfo> validEdges = new List<EdgeInfo>();
-    
     private SpriteRenderer spriteRenderer;
-
-    // Variable de ajuste de tamaño para corregir el tamaño del cuadrilátero
     public Vector2 sizeAdjustment = Vector2.one;
-
-    // Para visualizar los gizmos
     public bool showGizmos = true;
     private Vector2[] quadVertices = new Vector2[4];
     
