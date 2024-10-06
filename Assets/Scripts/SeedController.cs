@@ -30,17 +30,15 @@ public class SeedController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StartSeedSpawn(40f);
+            StartSeedSpawn();
         }
     }
 
-    public void StartSeedSpawn(float percent)
+    public void StartSeedSpawn()
     {
-        if (percent > percentajeToFirstSeeed)
-        {
-            float timeLeft = _levelSettings.gameLevelSettings.levelDuration - Time.time;
-            StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,timeLeft, 0f,timeToLastSpawn,_seedPool));
-        }
+        print("Llamé a las seed");
+        float timeLeft = _levelSettings.gameLevelSettings.levelDuration - Time.time;
+        StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,timeLeft, 0f,timeToLastSpawn,_seedPool));
     }
 
     public void Conclude()

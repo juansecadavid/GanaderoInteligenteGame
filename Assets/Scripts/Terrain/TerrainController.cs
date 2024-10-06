@@ -15,8 +15,8 @@ public class TerrainController : MonoBehaviour
     private float regenerationRate;
     private float currentGrassSize;
     private float terrainRange; // Rango entre min y max
-    private float targetGrassSize; // Tamaño hacia el que se mueve el terreno
-    private bool isUpdating = false; // Bandera para saber si ya se está actualizando
+    private float targetGrassSize; // Tamaï¿½o hacia el que se mueve el terreno
+    private bool isUpdating = false; // Bandera para saber si ya se estï¿½ actualizando
 
     public void Initialize()
     {
@@ -53,11 +53,13 @@ public class TerrainController : MonoBehaviour
         }
     }
 
+    //Llamar para semillas
     public void UpdateRegenerationRate(float value)
     {
         regenerationRate += (value / 100f) * terrainRange;
     }
 
+    //llamar para vacas
     public void UpdateTerrain(float value)
     {
         float newTargetValue = (value / 100f) * terrainRange;
@@ -99,10 +101,11 @@ public class TerrainController : MonoBehaviour
         isUpdating = false;
     }
 
-    public float GetCurrentTerrainPercentage()
+    //Llamar para activar semillas
+    public int GetCurrentTerrainPercentage()
     {
         float percentage = (currentGrassSize - minTerrainValue) / terrainRange * 100f;
-        return percentage;
+        return Mathf.RoundToInt(percentage);
     }
 
     public void Conclude()

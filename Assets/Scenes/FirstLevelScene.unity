@@ -481,7 +481,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d67379efebb63dd458b65729ffcb1c85, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1362,12 +1362,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.829849, y: 0.5124769}
-      - {x: -2.3426142, y: 0.4838307}
-      - {x: -2.4995642, y: -0.14759493}
-      - {x: -0.2304377, y: -1.106807}
+    - - {x: 2.829849, y: 0.48423868}
+      - {x: -2.4079778, y: 0.5403071}
+      - {x: -2.3470461, y: -0.17583314}
+      - {x: -0.099708796, y: -1.247998}
       - {x: 0.607638, y: -0.928133}
-      - {x: 2.8569121, y: 0.2097544}
+      - {x: 2.5300896, y: 0.0685634}
   m_UseDelaunayMesh: 0
 --- !u!114 &641443638
 MonoBehaviour:
@@ -2018,6 +2018,7 @@ MonoBehaviour:
   _terrainController: {fileID: 1990225708}
   _seedController: {fileID: 403487556}
   _playerController: {fileID: 252707630}
+  _levelSettings: {fileID: 11400000, guid: cd6829835e80b9e4a9fa13d891a10459, type: 2}
 --- !u!4 &896884919
 Transform:
   m_ObjectHideFlags: 0
@@ -3311,8 +3312,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grassTerrainSR: {fileID: 232309565}
   grassTerrainSlider: {fileID: 2084336687}
-  levelData: {fileID: 11400000, guid: 5150b798c331af149b71b2f2101f7e65, type: 2}
   _levelSettings: {fileID: 11400000, guid: cd6829835e80b9e4a9fa13d891a10459, type: 2}
+  minTerrainValue: 5.15
+  maxTerrainValue: 12.6
 --- !u!1 &2010318728
 GameObject:
   m_ObjectHideFlags: 0
