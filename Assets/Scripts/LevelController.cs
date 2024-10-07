@@ -24,6 +24,7 @@ public class LevelController : MonoBehaviour
     public void EatTerrain(float percent,GameObject cow)
     {
         //IMplementar que se baje el terreno
+        _terrainController.UpdateTerrain(-percent);
         //print($"Comer {percent}% de terreno");
     }
 

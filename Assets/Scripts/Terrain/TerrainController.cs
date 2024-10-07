@@ -37,8 +37,8 @@ public class TerrainController : MonoBehaviour
         grassTerrainSlider.onValueChanged.AddListener(OnGrassValueChanged);
         OnGrassValueChanged(minTerrainValue);
 
-        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.regerationTime, _levelSettings.terrainSettings.regenerationPercentage));
-        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.degradationTime, -_levelSettings.terrainSettings.degradationPercentage));
+        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.regerationTime, _levelSettings.terrainSettings.regenerationPercentage,0f));
+        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.degradationTime, -_levelSettings.terrainSettings.degradationPercentage, _levelSettings.cowSettings.timeToSpawnFirstCow));
     }
 
     private void OnGrassValueChanged(float value)
@@ -46,8 +46,9 @@ public class TerrainController : MonoBehaviour
         grassTerrainSR.size = new Vector2(grassTerrainSR.size.x, value);
     }
 
-    private IEnumerator ManageTerrainRegeneration(float time, float value)
+    private IEnumerator ManageTerrainRegeneration(float time, float value, float secondsToStart)
     {
+        yield return new WaitForSeconds(secondsToStart);
         while (true)
         {
             yield return new WaitForSeconds(time);
