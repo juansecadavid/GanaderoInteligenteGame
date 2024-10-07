@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class TerrainController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class TerrainController : MonoBehaviour
     [SerializeField] private float maxTerrainValue;
 
     private float regenerationRate;
+    private float degradationRate;
     private float currentGrassSize;
     private float terrainRange; // Rango entre min y max
     private float targetGrassSize; // Tama�o hacia el que se mueve el terreno
@@ -23,7 +25,7 @@ public class TerrainController : MonoBehaviour
         terrainRange = maxTerrainValue - minTerrainValue;
 
         regenerationRate = 0;
-        UpdateRegenerationRate(_levelSettings.terrainSettings.regenerationPercentage);
+        degradationRate = 0;
 
         grassTerrainSlider.minValue = minTerrainValue;
         grassTerrainSlider.maxValue = maxTerrainValue;
@@ -35,7 +37,8 @@ public class TerrainController : MonoBehaviour
         grassTerrainSlider.onValueChanged.AddListener(OnGrassValueChanged);
         OnGrassValueChanged(minTerrainValue);
 
-        StartCoroutine(ManageTerrainRegeneration());
+        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.regerationTime, _levelSettings.terrainSettings.regenerationPercentage));
+        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.degradationTime, -_levelSettings.terrainSettings.degradationPercentage));
     }
 
     private void OnGrassValueChanged(float value)
@@ -43,13 +46,13 @@ public class TerrainController : MonoBehaviour
         grassTerrainSR.size = new Vector2(grassTerrainSR.size.x, value);
     }
 
-    private IEnumerator ManageTerrainRegeneration()
+    private IEnumerator ManageTerrainRegeneration(float time, float value)
     {
         while (true)
         {
-            yield return new WaitForSeconds(_levelSettings.terrainSettings.regerationTime);
+            yield return new WaitForSeconds(time);
 
-            AddToTarget(regenerationRate);
+            UpdateTerrain(value);
         }
     }
 
