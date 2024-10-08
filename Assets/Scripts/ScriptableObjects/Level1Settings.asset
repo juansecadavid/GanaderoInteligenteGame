@@ -15,17 +15,28 @@ MonoBehaviour:
   terrainSettings:
     regerationTime: 6
     regenerationPercentage: 10
-    degradationPercentage: 8
+    degradationPercentage: 3
     degradationTime: 5
   cowSettings:
     timeToSpawnFirstCow: 2
     timeToLastSpawn: 4
     minimunHitsToGo: 3
     maximumHitsToGo: 6
+    timeToEatTerrain: 2
+    commonPercentajeWhenEat: 2
+    hungryPercentajeWhenEat: 3
+    specialPercentajeWhenEat: 5
+    commonCowSpeed: 1
+    hungryCowSpeed: 1
+    specialCowSpeed: 3
   gameLevelSettings:
     levelDuration: 60
-    totalCows: 14
+    totalCommonCows: 10
+    totalHungryCows: 2
+    totalSpecialCows: 2
     totalSeeds: 3
   seedSettings:
     timeToLastSpawn: 10
     percentajeToFirstSpawn: 20
+    percentajeToRegenerationIncrease: 5
+    timeToPlant: 2

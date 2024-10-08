@@ -8,7 +8,8 @@ public class Seed : MonoBehaviour
 {
     [SerializeField] private LevelSettings _levelSettings;
     [SerializeField] private GameObject plantZone;
-    private GameObject _player;
+    private GameObject _attacher;
+    private PlayerController _player;
     private float timeToPlant;
     public static Action<float> increaseRegeneration;
     public static Action<bool> enableDragAndDrop;
@@ -34,7 +35,7 @@ public class Seed : MonoBehaviour
             case States.Spawned:
                 break;
             case States.AttachedToPlayer:
-                transform.position = _player.transform.position;
+                transform.position = _attacher.transform.position;
                 break;
             case States.Planted:
                 break;
@@ -47,9 +48,10 @@ public class Seed : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_state==States.Spawned && other.gameObject.CompareTag("Player"))
+        if (_state==States.Spawned && other.gameObject.CompareTag("Player") && !other.gameObject.GetComponent<PlayerController>().IsAttached)
         {
-            _player = other.GetComponent<PlayerController>().attacher;
+            _player = other.GetComponent<PlayerController>();
+            _attacher = _player.Attach();
             _state = States.AttachedToPlayer;
             plantZone.GetComponent<BoxCollider2D>().enabled = true;
         }
@@ -78,6 +80,7 @@ public class Seed : MonoBehaviour
         enableDragAndDrop?.Invoke(false);
         yield return new WaitForSeconds(timeToPlant);
         DragAndDrop.OnMouseUpAction -= StartPlant;
+        _player.IsAttached = false;
         enableDragAndDrop?.Invoke(true);
         increaseRegeneration?.Invoke(percentajeToIncrease);
     }

@@ -18,8 +18,19 @@ public class LevelSettings : ScriptableObject
         public int maximumHitsToGo = 6;
         [Tooltip("Cuantos segundos deben pasar para que la vaca se coma el terreno.")]
         public float timeToEatTerrain = 2;
-        [Tooltip("Cuanto porcentaje daña la vaca al comer.")]
-        public float percentajeWhenEat = 2;
+        [Tooltip("Cuanto porcentaje daña la vaca común al comer.")]
+        public float commonPercentajeWhenEat = 2;
+        [Tooltip("Cuanto porcentaje daña la vaca hambrienta al comer.")]
+        public float hungryPercentajeWhenEat = 2;
+        [Tooltip("Cuanto porcentaje daña la vaca especial al comer.")]
+        public float specialPercentajeWhenEat = 2;
+        [Tooltip("Velocidad la vaca común al caminar libremente.")]
+        public float commonCowSpeed = 1;
+        [Tooltip("Velocidad la vaca hambrienta al caminar libremente.")]
+        public float hungryCowSpeed = 1;
+        [Tooltip("Velocidad la vaca especial al caminar libremente.")]
+        public float specialCowSpeed = 1;
+        
     }
 
     [System.Serializable]
@@ -48,7 +59,9 @@ public class LevelSettings : ScriptableObject
     public class GameLevelSettings
     {
         public int levelDuration = 1920;
-        public int totalCows = 3;
+        public int totalCommonCows = 3;
+        public int totalHungryCows = 3;
+        public int totalSpecialCows = 3;
         public int totalSeeds = 3;
     }
 

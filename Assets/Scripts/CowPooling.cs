@@ -24,7 +24,7 @@ public class CowPooling : MonoBehaviour
     void Start()
     {
         totalLevelTime = _levelSettings.gameLevelSettings.levelDuration;
-        _poolLenght = _levelSettings.gameLevelSettings.totalCows;
+        _poolLenght = _levelSettings.gameLevelSettings.totalCommonCows;
         timeToFirstSpawn = _levelSettings.cowSettings.timeToSpawnFirstCow;
         timeToLastSpawn = _levelSettings.cowSettings.timeToLastSpawn;
         InstantiatePool();

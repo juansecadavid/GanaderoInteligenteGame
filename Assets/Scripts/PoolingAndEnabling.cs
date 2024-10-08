@@ -15,6 +15,38 @@ public class PoolingAndEnabling : MonoBehaviour
         }
         return instantiatedList;
     }
+    
+    public List<GameObject> InstantiatePool(int x, int y, int z, GameObject gameObject1, GameObject gameObject2, GameObject gameObject3)
+    {
+        List<GameObject> instantiatedList = new List<GameObject>();
+        for (int i = 0; i < x; i++)
+        {
+            GameObject clone = Instantiate(gameObject1);
+            clone.SetActive(false);
+            instantiatedList.Add(clone);
+        }
+        for (int i = 0; i < y; i++)
+        {
+            GameObject clone = Instantiate(gameObject2);
+            clone.SetActive(false);
+            instantiatedList.Add(clone);
+        }
+        for (int i = 0; i < z; i++)
+        {
+            GameObject clone = Instantiate(gameObject3);
+            clone.SetActive(false);
+            instantiatedList.Add(clone);
+        }
+        
+        for (int i = 0; i < instantiatedList.Count; i++)
+        {
+            int randomIndex = Random.Range(0, instantiatedList.Count);
+            GameObject temp = instantiatedList[i];
+            instantiatedList[i] = instantiatedList[randomIndex];
+            instantiatedList[randomIndex] = temp;
+        }
+        return instantiatedList;
+    }
 
     public IEnumerator ShowRandomTimes(int x, float y, float e, float p, List<GameObject> gameObjectsList)
     {

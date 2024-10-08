@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] public GameObject attacher;
     [SerializeField] private DragAndDrop _dragAndDrop;
-    
-    
+    public bool IsAttached { get;  set; }
+
+
     public void Initialize()
     {
+        IsAttached = false;
         Seed.enableDragAndDrop += EnableDragAndDrop;
     }
     public void Conclude()
@@ -21,5 +23,11 @@ public class PlayerController : MonoBehaviour
     private void EnableDragAndDrop(bool enable)
     {
         _dragAndDrop.isEnabled = enable;
+    }
+
+    public GameObject Attach()
+    {
+        IsAttached = true;
+        return attacher;
     }
 }
