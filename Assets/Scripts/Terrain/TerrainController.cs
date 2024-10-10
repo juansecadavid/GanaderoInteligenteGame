@@ -14,18 +14,18 @@ public class TerrainController : MonoBehaviour
     [SerializeField] private float maxTerrainValue;
 
     private float regenerationRate;
-    private float degradationRate;
     private float currentGrassSize;
     private float terrainRange; // Rango entre min y max
     private float targetGrassSize; // Tama�o hacia el que se mueve el terreno
     private bool isUpdating = false; // Bandera para saber si ya se est� actualizando
 
+    private Coroutine regenerationCoroutine;
+
     public void Initialize()
     {
         terrainRange = maxTerrainValue - minTerrainValue;
 
-        regenerationRate = 0;
-        degradationRate = 0;
+        regenerationRate = _levelSettings.terrainSettings.regenerationPercentage;
 
         grassTerrainSlider.minValue = minTerrainValue;
         grassTerrainSlider.maxValue = maxTerrainValue;
@@ -36,14 +36,23 @@ public class TerrainController : MonoBehaviour
 
         grassTerrainSlider.onValueChanged.AddListener(OnGrassValueChanged);
         OnGrassValueChanged(minTerrainValue);
-
-        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.regerationTime, _levelSettings.terrainSettings.regenerationPercentage,0f));
-        StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.degradationTime, -_levelSettings.terrainSettings.degradationPercentage, _levelSettings.cowSettings.timeToSpawnFirstCow));
     }
 
     private void OnGrassValueChanged(float value)
     {
         grassTerrainSR.size = new Vector2(grassTerrainSR.size.x, value);
+    }
+
+    public void EnableTerrainRegenaration(bool value)
+    {
+        if (value)
+        {
+            regenerationCoroutine = StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.regerationTime, regenerationRate, 0f));
+        }
+        else
+        {
+            StopCoroutine(regenerationCoroutine);
+        }
     }
 
     private IEnumerator ManageTerrainRegeneration(float time, float value, float secondsToStart)

@@ -6,8 +6,13 @@ public class EnemyFarmersController : MonoBehaviour
 {
     [SerializeField] private EnemyFarmerBase[] enemyFarmers;
     
-    public void EnableEnemyFarmer(int index, bool value)
+    public void Initialize(int index)
     {
-        enemyFarmers[index].gameObject.SetActive(value);
+        enemyFarmers[index].Initialize();
+    }
+
+    public void Conclude(int index)
+    {
+        enemyFarmers[index].Conclude();
     }
 }
