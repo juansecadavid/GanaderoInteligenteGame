@@ -13,6 +13,8 @@ public class SeedController : MonoBehaviour
     private List<GameObject> _seedPool;
     private float percentajeToFirstSeeed;
     float timeToLastSpawn;
+
+    public List<GameObject> SeedPool {  get { return _seedPool; } }
     
     public void Initialize()
     {

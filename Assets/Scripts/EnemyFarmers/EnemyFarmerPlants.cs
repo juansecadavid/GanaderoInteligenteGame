@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class EnemyFarmerPlants : EnemyFarmerBase
 {
-    private Transform[] currentSeedsPlanted;
+    [SerializeField] private SeedController seedController;
+
+    private List<GameObject> currentSeedsPlanted;
 
     private int currentSeedSelected;
 
     public override void Initialize()
     {
-        //currentSeedsPlanted = ;
+        currentSeedsPlanted = seedController.SeedPool;
         base.Initialize();
 
         MoveToTargetFinished += OnSeedPos;
-        currentSeedSelected = Random.Range(0, currentSeedsPlanted.Length);
-        MoveToTarget(currentSeedsPlanted[currentSeedSelected]);
+
+        SelectActiveSeed();
+    }
+
+    private void SelectActiveSeed()
+    {
+        do
+        {
+            currentSeedSelected = Random.Range(0, currentSeedsPlanted.Count);
+        }
+        while (!currentSeedsPlanted[currentSeedSelected].activeInHierarchy);
+
+        MoveToTarget(currentSeedsPlanted[currentSeedSelected].transform);
     }
 
     private void OnSeedPos()
