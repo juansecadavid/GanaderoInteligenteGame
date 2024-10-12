@@ -64,9 +64,19 @@ public class LevelSettings : ScriptableObject
         public int totalSpecialCows = 3;
         public int totalSeeds = 3;
     }
+    
+    [System.Serializable]
+    public class FarmerSettings
+    {
+        [Tooltip("Cantidad de vacas necesarias para activarse)")]
+        public int cowAmountNeed = 2;
+        [Tooltip("Cantidad de semillas plantadas necesarias para activarse)")]
+        public int seedAmountNeed = 2;
+    }
 
     public TerrainSettings terrainSettings;
     public CowSettings cowSettings;
     public GameLevelSettings gameLevelSettings;
     public SeedSettings seedSettings;
+    public FarmerSettings farmerSettings;
 }

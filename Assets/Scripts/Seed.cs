@@ -8,6 +8,7 @@ public class Seed : MonoBehaviour
 {
     [SerializeField] private LevelSettings _levelSettings;
     [SerializeField] private GameObject plantZone;
+    public static Action<int> seedCounter;
     private GameObject _attacher;
     private PlayerController _player;
     private float timeToPlant;
@@ -79,6 +80,7 @@ public class Seed : MonoBehaviour
         //Implementar que se active la animacion de plantar
         enableDragAndDrop?.Invoke(false);
         yield return new WaitForSeconds(timeToPlant);
+        seedCounter?.Invoke(1);
         DragAndDrop.OnMouseUpAction -= StartPlant;
         _player.IsAttached = false;
         enableDragAndDrop?.Invoke(true);

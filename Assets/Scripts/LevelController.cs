@@ -13,6 +13,14 @@ public class LevelController : MonoBehaviour
     [SerializeField] private PlayerController _playerController;
 
     [SerializeField] private LevelSettings _levelSettings;
+
+    [SerializeField] private PointsSystem _pointsSystem;
+
+    [SerializeField] private UIManager _uiManager;
+
+    [SerializeField] private EnemyFarmersController enemyFarmersController;
+
+    [SerializeField] private bool hasFarmers;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,14 +59,44 @@ public class LevelController : MonoBehaviour
         _seedController.Initialize();
         _playerController.Initialize();
         _terrainController.Initialize();
+        _pointsSystem.Initialize();
+        _uiManager.Initialize();
         StartCoroutine(CheckTerrainPercentage());
+        if (hasFarmers)
+        {
+            StartCoroutine(CheckFarmerCow());
+            StartCoroutine(CheckFarmerSeed());
+        }
     }
 
+    IEnumerator CheckFarmerCow()
+    {
+        int cowA = _levelSettings.farmerSettings.cowAmountNeed;
+        while (_uiManager.CowAmount<cowA)
+        {
+            yield return null;
+        }
+        
+        enemyFarmersController.Initialize(0);
+    }
+    
+    IEnumerator CheckFarmerSeed()
+    {
+        int seedA = _levelSettings.farmerSettings.seedAmountNeed;
+        while (_uiManager.SeedAmount<seedA)
+        {
+            yield return null;
+        }
+        
+        enemyFarmersController.Initialize(1);
+    }
+    
     public void Conclude()
     {
         _cowController.Conclude();
         _seedController.Conclude();
         _playerController.Conclude();
         _terrainController.Conclude();
+        _uiManager.Conclude();
     }
 }

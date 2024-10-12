@@ -10,6 +10,7 @@ public class Cow : MonoBehaviour
     [SerializeField] private GetRandomPointInPolygon _randomPointInPolygon;
     [SerializeField] private RandomPointInSquare _randomPointInSquare;
     public static Action<float,GameObject> eatTerrain;
+    public static Action<int> cowAmount;
     private int numberOfHitMax;
     private int numberOfHitMin;
     private int numberOfHits;
@@ -100,6 +101,7 @@ public class Cow : MonoBehaviour
             numberOfHits--;
             if (numberOfHits <= 0)
             {
+                cowAmount?.Invoke(1);
                 _state = State.WalkingToCorral;
                 _speed = 2f;
                 _currentTarget = _randomPointInPolygon.GetRandomPoint();
@@ -122,6 +124,7 @@ public class Cow : MonoBehaviour
     }
     public void SettingFree()
     {
+        cowAmount?.Invoke(-1);
         _state = State.WalkingFree;
         GetComponent<BoxCollider2D>().enabled = true;
     }
