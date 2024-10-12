@@ -19,6 +19,7 @@ public class CowController : MonoBehaviour
     private int _specialCowLenght;
 
     private List<GameObject> _cowPool;
+    public List<GameObject> CowPool {  get { return _cowPool; } }
 
     float totalLevelTime;
 

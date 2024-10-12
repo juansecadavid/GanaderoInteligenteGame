@@ -8,7 +8,7 @@ public class EnemyFarmerBase : MonoBehaviour
     public Action MoveToTargetFinished;
     public Action<bool> DestroyCompleted;
 
-    [SerializeField] private float destructionTime;
+    [SerializeField] protected float destructionTime;
     [SerializeField] private float moveDuration;
     [SerializeField] private Transform[] movePoints;
 
@@ -17,7 +17,8 @@ public class EnemyFarmerBase : MonoBehaviour
     private float elapsedTime;
     private Coroutine destroyingCoroutine;
 
-    public bool isDestroying;
+    private bool isDestroying;
+    protected bool isChasedAway;
     private bool hasChanged = false;
 
     public virtual void Initialize()
@@ -83,6 +84,7 @@ public class EnemyFarmerBase : MonoBehaviour
     public void DriveAway()
     {
         isDestroying = false;
+        isChasedAway = true;
         MoveToTarget(movePoints[Random.Range(0, movePoints.Length)]);
     }
 

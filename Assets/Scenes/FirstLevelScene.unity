@@ -647,13 +647,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destructionTime: 4
-  moveDuration: 3
+  moveDuration: 5
   movePoints:
   - {fileID: 792925020}
   - {fileID: 216812898}
   - {fileID: 755509460}
   - {fileID: 1635197403}
   isDestroying: 0
+  cowController: {fileID: 403487557}
   fencePoint: {fileID: 1965277802}
   interactableFence: {fileID: 1504057634}
 --- !u!70 &248231008
@@ -2671,6 +2672,8 @@ MonoBehaviour:
   _levelSettings: {fileID: 11400000, guid: cd6829835e80b9e4a9fa13d891a10459, type: 2}
   _pointsSystem: {fileID: 403487558}
   _uiManager: {fileID: 709361603}
+  enemyFarmersController: {fileID: 1828268740}
+  hasFarmers: 1
 --- !u!4 &896884919
 Transform:
   m_ObjectHideFlags: 0

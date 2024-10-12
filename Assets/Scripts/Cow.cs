@@ -19,20 +19,10 @@ public class Cow : MonoBehaviour
     private Vector2 _currentTarget;
     public float _speed;
     [SerializeField] private Type _type;
-    private enum Type
-    {
-        Common,
-        Hungry,
-        Special
-    }
-    
-    enum State
-    {
-        WalkingFree,
-        WalkingToCorral,
-        InCorral
-    }
+
     private State _state = State.WalkingFree;
+    public State State {  get { return _state; } }
+
     public void Initialize()
     {
         numberOfHitMax = _levelSettings.cowSettings.maximumHitsToGo;
@@ -96,16 +86,19 @@ public class Cow : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_state==State.WalkingFree && other.gameObject.CompareTag("Player") && !other.GetComponent<PlayerController>().IsAttached)
+        if (_state == State.WalkingFree && other.gameObject.CompareTag("Player"))
         {
-            numberOfHits--;
-            if (numberOfHits <= 0)
+            if (other.TryGetComponent<PlayerController>(out var playerController) && !playerController.IsAttached)
             {
-                cowAmount?.Invoke(1);
-                _state = State.WalkingToCorral;
-                _speed = 2f;
-                _currentTarget = _randomPointInPolygon.GetRandomPoint();
-                gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                numberOfHits--;
+                if (numberOfHits <= 0)
+                {
+                    cowAmount?.Invoke(1);
+                    _state = State.WalkingToCorral;
+                    _speed = 2f;
+                    _currentTarget = _randomPointInPolygon.GetRandomPoint();
+                    gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                }
             }
         }
     }
@@ -139,4 +132,18 @@ public class Cow : MonoBehaviour
             }
         }
     }
+}
+
+public enum Type
+{
+    Common,
+    Hungry,
+    Special
+}
+
+public enum State
+{
+    WalkingFree,
+    WalkingToCorral,
+    InCorral
 }

@@ -8,6 +8,7 @@ public class EnemyFarmersController : MonoBehaviour
     
     public void Initialize(int index)
     {
+        print("Initialize: " + index);
         enemyFarmers[index].Initialize();
     }
 
