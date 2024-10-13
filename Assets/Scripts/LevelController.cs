@@ -100,7 +100,7 @@ public class LevelController : MonoBehaviour
             yield return null;
         }
         
-        //enemyFarmersController.Initialize(1);
+        enemyFarmersController.Initialize(1);
     }
     
     public void Conclude()

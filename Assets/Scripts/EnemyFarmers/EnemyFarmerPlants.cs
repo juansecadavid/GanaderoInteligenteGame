@@ -15,8 +15,6 @@ public class EnemyFarmerPlants : EnemyFarmerBase
         currentSeedsPlanted = seedController.SeedPool;
         base.Initialize();
 
-        MoveToTargetFinished += OnSeedPos;
-
         SelectActiveSeed();
     }
 
@@ -26,8 +24,10 @@ public class EnemyFarmerPlants : EnemyFarmerBase
         {
             currentSeedSelected = Random.Range(0, currentSeedsPlanted.Count);
         }
-        while (!currentSeedsPlanted[currentSeedSelected].activeInHierarchy);
+        while (!currentSeedsPlanted[currentSeedSelected].activeInHierarchy && 
+        currentSeedsPlanted[currentSeedSelected].GetComponent<Seed>().State != States.Planted);
 
+        MoveToTargetFinished += OnSeedPos;
         MoveToTarget(currentSeedsPlanted[currentSeedSelected].transform);
     }
 
@@ -46,9 +46,16 @@ public class EnemyFarmerPlants : EnemyFarmerBase
     private void OnDestroyCompleted(bool value)
     {
         DestroyCompleted -= OnDestroyCompleted;
-        currentSeedsPlanted[currentSeedSelected].gameObject.SetActive(!value);
 
-        //Revisar que debe pasar acà segun "value"
+        if (value)
+        {
+            currentSeedsPlanted[currentSeedSelected].GetComponent<Seed>().SettingDestroyed();
+
+            if (!isChasedAway)
+            {
+                SelectActiveSeed();
+            }
+        }
     }
 
     public override void Conclude()

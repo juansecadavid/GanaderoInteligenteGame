@@ -18,11 +18,8 @@ public class Seed : MonoBehaviour
     
     
     private States _state;
-    private enum States{
-        Spawned,
-        AttachedToPlayer,
-        Planted
-    }
+    public States State { get { return _state; } }
+    
     public void Initialize()
     {
         _state = States.Spawned;
@@ -86,4 +83,19 @@ public class Seed : MonoBehaviour
         enableDragAndDrop?.Invoke(true);
         increaseRegeneration?.Invoke(percentajeToIncrease);
     }
+
+    public void SettingDestroyed()
+    {
+        seedCounter?.Invoke(-1);
+        _state = States.Destroyed;
+        gameObject.SetActive(false);
+    }
+}
+
+public enum States
+{
+    Spawned,
+    AttachedToPlayer,
+    Planted,
+    Destroyed
 }
