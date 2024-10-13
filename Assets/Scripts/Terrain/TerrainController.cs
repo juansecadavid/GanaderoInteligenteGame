@@ -47,7 +47,7 @@ public class TerrainController : MonoBehaviour
     {
         if (value)
         {
-            regenerationCoroutine = StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.regerationTime, regenerationRate, 0f));
+            regenerationCoroutine = StartCoroutine(ManageTerrainRegeneration(_levelSettings.terrainSettings.regerationTime, 0f));
         }
         else
         {
@@ -55,21 +55,22 @@ public class TerrainController : MonoBehaviour
         }
     }
 
-    private IEnumerator ManageTerrainRegeneration(float time, float value, float secondsToStart)
+    private IEnumerator ManageTerrainRegeneration(float time, float secondsToStart)
     {
         yield return new WaitForSeconds(secondsToStart);
+
         while (true)
         {
             yield return new WaitForSeconds(time);
 
-            UpdateTerrain(value);
+            UpdateTerrain(regenerationRate);
         }
     }
 
     //Llamar para semillas
     public void UpdateRegenerationRate(float value)
     {
-        regenerationRate += (value / 100f) * terrainRange;
+        regenerationRate += value;
     }
 
     //llamar para vacas

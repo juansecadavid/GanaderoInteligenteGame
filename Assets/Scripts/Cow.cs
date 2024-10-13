@@ -23,29 +23,7 @@ public class Cow : MonoBehaviour
     private State _state = State.WalkingFree;
     public State State {  get { return _state; } }
 
-    public void Initialize()
-    {
-        numberOfHitMax = _levelSettings.cowSettings.maximumHitsToGo;
-        numberOfHitMin = _levelSettings.cowSettings.minimunHitsToGo;
-        timeToEatTerrain = _levelSettings.cowSettings.timeToEatTerrain;
-        switch (_type)
-        {
-            case Type.Common:
-                percentajeWhenEat = _levelSettings.cowSettings.commonPercentajeWhenEat;
-                _speed = _levelSettings.cowSettings.commonCowSpeed;
-                break;
-            case Type.Hungry:
-                percentajeWhenEat = _levelSettings.cowSettings.hungryPercentajeWhenEat;
-                _speed = _levelSettings.cowSettings.hungryCowSpeed;
-                break;
-            case Type.Special:
-                percentajeWhenEat = _levelSettings.cowSettings.specialPercentajeWhenEat;
-                _speed = _levelSettings.cowSettings.specialCowSpeed;
-                break;
-        }
-        SetTargetPoint(-3f,8f, -4.3f, 2f);
-        SetHitNumbers();
-    }
+    
     void FixedUpdate()
     {
         Vector2 currentPosition = transform.position;
@@ -102,6 +80,37 @@ public class Cow : MonoBehaviour
             }
         }
     }
+
+    public void Initialize()
+    {
+        numberOfHitMax = _levelSettings.cowSettings.maximumHitsToGo;
+        numberOfHitMin = _levelSettings.cowSettings.minimunHitsToGo;
+        timeToEatTerrain = _levelSettings.cowSettings.timeToEatTerrain;
+
+        SetStartValues();
+        SetTargetPoint(-3f, 8f, -4.3f, 2f);
+        SetHitNumbers();
+    }
+
+    private void SetStartValues()
+    {
+        switch (_type)
+        {
+            case Type.Common:
+                percentajeWhenEat = _levelSettings.cowSettings.commonPercentajeWhenEat;
+                _speed = _levelSettings.cowSettings.commonCowSpeed;
+                break;
+            case Type.Hungry:
+                percentajeWhenEat = _levelSettings.cowSettings.hungryPercentajeWhenEat;
+                _speed = _levelSettings.cowSettings.hungryCowSpeed;
+                break;
+            case Type.Special:
+                percentajeWhenEat = _levelSettings.cowSettings.specialPercentajeWhenEat;
+                _speed = _levelSettings.cowSettings.specialCowSpeed;
+                break;
+        }
+    }
+
     private void SetHitNumbers()
     {
         numberOfHits = Random.Range(numberOfHitMin, numberOfHitMax);
@@ -120,6 +129,7 @@ public class Cow : MonoBehaviour
         cowAmount?.Invoke(-1);
         _state = State.WalkingFree;
         GetComponent<BoxCollider2D>().enabled = true;
+        SetStartValues();
     }
     private IEnumerator EatTerrain()
     {

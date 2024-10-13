@@ -87,6 +87,7 @@ public class Seed : MonoBehaviour
     public void SettingDestroyed()
     {
         seedCounter?.Invoke(-1);
+        increaseRegeneration?.Invoke(-percentajeToIncrease);
         _state = States.Destroyed;
         gameObject.SetActive(false);
     }

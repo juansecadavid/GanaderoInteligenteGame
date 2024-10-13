@@ -38,7 +38,8 @@ public class LevelController : MonoBehaviour
 
     public void IncreaseRegeneration(float regenerationPercentajeToIncrease)
     {
-        //Implementar que ahora la regeneracion sube su porcentaje
+        //print("IncreaseRegeneration: " + regenerationPercentajeToIncrease);
+        _terrainController.UpdateRegenerationRate(regenerationPercentajeToIncrease);
     }
 
     IEnumerator CheckCowForSeed()
@@ -56,10 +57,10 @@ public class LevelController : MonoBehaviour
     {
         while (_terrainController.GetCurrentTerrainPercentage()<_levelSettings.seedSettings.percentajeToFirstSpawn)
         {
-            print($"Estoy en el bucle {_terrainController.GetCurrentTerrainPercentage()}");
+            //print($"Estoy en el bucle {_terrainController.GetCurrentTerrainPercentage()}");
             yield return null;
         }
-        print("Salí del bucle");
+        //print("Salí del bucle");
 
         _seedController.StartSeedSpawn();
     }
@@ -73,6 +74,7 @@ public class LevelController : MonoBehaviour
         _pointsSystem.Initialize();
         _uiManager.Initialize();
         StartCoroutine(CheckTerrainPercentage());
+        StartCoroutine(CheckTerrainRegeneration());
         StartCoroutine(CheckCowForSeed());
         if (hasFarmers)
         {
@@ -102,7 +104,17 @@ public class LevelController : MonoBehaviour
         
         enemyFarmersController.Initialize(1);
     }
-    
+
+    IEnumerator CheckTerrainRegeneration()
+    {
+        while (_uiManager.SeedAmount <= 0)
+        {
+            yield return null;
+        }
+
+        _terrainController.EnableTerrainRegenaration(true);
+    }
+
     public void Conclude()
     {
         _cowController.Conclude();
