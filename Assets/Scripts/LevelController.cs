@@ -41,6 +41,17 @@ public class LevelController : MonoBehaviour
         //Implementar que ahora la regeneracion sube su porcentaje
     }
 
+    IEnumerator CheckCowForSeed()
+    {
+        int cowA = _levelSettings.seedSettings.cowsToFirstSpawn;
+        while (_uiManager.CowAmount<cowA)
+        {
+            yield return null;
+        }
+        
+        _seedController.StartSeedSpawn();
+    }
+
     IEnumerator CheckTerrainPercentage()
     {
         while (_terrainController.GetCurrentTerrainPercentage()<_levelSettings.seedSettings.percentajeToFirstSpawn)
@@ -62,6 +73,7 @@ public class LevelController : MonoBehaviour
         _pointsSystem.Initialize();
         _uiManager.Initialize();
         StartCoroutine(CheckTerrainPercentage());
+        StartCoroutine(CheckCowForSeed());
         if (hasFarmers)
         {
             StartCoroutine(CheckFarmerCow());

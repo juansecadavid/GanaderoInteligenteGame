@@ -44,6 +44,9 @@ public class LevelSettings : ScriptableObject
         public int percentajeToRegenerationIncrease = 5;
         [Tooltip("Tiempo que se demora en plantar la semilla (El jugador no se podrá mover durante este tiempo)")]
         public int timeToPlant = 2;
+
+        [Tooltip("Cantidad de vacas necesarias para que aparezca la primera semilla")]
+        public int cowsToFirstSpawn = 4;
     }
 
     [System.Serializable]
