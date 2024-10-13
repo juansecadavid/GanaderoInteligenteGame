@@ -11,6 +11,7 @@ public class EnemyFarmerBase : MonoBehaviour
     [SerializeField] protected float destructionTime;
     [SerializeField] private float moveDuration;
     [SerializeField] private Transform[] movePoints;
+    [SerializeField] private int numberOfHits;
 
     private bool isMoving;
     private Vector3 startPos;
@@ -77,11 +78,26 @@ public class EnemyFarmerBase : MonoBehaviour
             yield return null;
         }
 
-        isDestroying = false;
+        //isDestroying = false;
         DestroyCompleted?.Invoke(!hasChanged);
     }
 
-    public void DriveAway()
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (isDestroying && other.gameObject.CompareTag("Player"))
+        {
+            if (other.TryGetComponent<PlayerController>(out var playerController) && !playerController.IsAttached)
+            {
+                numberOfHits--;
+                if (numberOfHits <= 0)
+                {
+                    DriveAway();
+                }
+            }
+        }
+    }
+
+    protected virtual void DriveAway()
     {
         isDestroying = false;
         isChasedAway = true;
@@ -90,6 +106,8 @@ public class EnemyFarmerBase : MonoBehaviour
 
     public virtual void Conclude()
     {
+        isDestroying = false;
+        isChasedAway = false;
         StopCoroutine(destroyingCoroutine);
         gameObject.SetActive(false);
     }

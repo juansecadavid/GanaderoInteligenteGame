@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyFarmerCows : EnemyFarmerBase
 {
@@ -32,8 +33,6 @@ public class EnemyFarmerCows : EnemyFarmerBase
         DestroyCompleted += OnDestroyCompleted;
         base.Destroy();
     }
-
-    
 
     private void OnDestroyCompleted(bool value)
     {
@@ -73,6 +72,12 @@ public class EnemyFarmerCows : EnemyFarmerBase
 
             cowController.CowPool[currentCowSelected].GetComponent<Cow>().SettingFree();
         }
+    }
+
+    protected override void DriveAway()
+    {
+        interactableFence.gameObject.SetActive(true);
+        base.DriveAway();
     }
 
 

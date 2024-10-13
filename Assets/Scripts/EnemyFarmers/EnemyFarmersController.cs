@@ -16,29 +16,4 @@ public class EnemyFarmersController : MonoBehaviour
     {
         enemyFarmers[index].Conclude();
     }
-
-    //Test
-    [ContextMenu("EnableEnemyFarmerCows")]
-    public void EnableEnemyFarmerCows()
-    {
-        Initialize(0);
-    }
-
-    [ContextMenu("EnableEnemyFarmerCowsAway")]
-    public void EnableEnemyFarmerCowsAway()
-    {
-        enemyFarmers[0].DriveAway();
-    }
-
-    [ContextMenu("EnableEnemyFarmerPlants")]
-    public void EnableEnemyFarmerPlants()
-    {
-        Initialize(1);
-    }
-
-    [ContextMenu("EnableEnemyFarmerPlantsAway")]
-    public void EnableEnemyFarmerPlantsAway()
-    {
-        enemyFarmers[1].DriveAway();
-    }
 }
