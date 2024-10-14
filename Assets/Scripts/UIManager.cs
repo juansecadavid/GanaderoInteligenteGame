@@ -54,13 +54,13 @@ public class UIManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(timeRemaining / 60);
             int seconds = Mathf.FloorToInt(timeRemaining % 60);
             
-            timeTxt.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timeTxt.text = string.Format("{0:0}:{1:00}", minutes, seconds);
 
             // Esperar hasta el siguiente frame
             yield return null;
         }
         
-        timeTxt.text = "00:00";
+        timeTxt.text = "0:00";
     }
 
     public void Conclude()

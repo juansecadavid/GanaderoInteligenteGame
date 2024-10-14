@@ -8,6 +8,8 @@ public class Seed : MonoBehaviour
 {
     [SerializeField] private LevelSettings _levelSettings;
     [SerializeField] private GameObject plantZone;
+    [SerializeField] private Sprite plant;
+    private SpriteRenderer _spriteRenderer;
     public static Action<int> seedCounter;
     private GameObject _attacher;
     private PlayerController _player;
@@ -17,12 +19,14 @@ public class Seed : MonoBehaviour
     private float percentajeToIncrease;
     
     
+    
     private States _state;
     public States State { get { return _state; } }
     
     public void Initialize()
     {
         _state = States.Spawned;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         percentajeToIncrease = _levelSettings.seedSettings.percentajeToRegenerationIncrease;
         timeToPlant = _levelSettings.seedSettings.timeToPlant;
     }
@@ -51,7 +55,7 @@ public class Seed : MonoBehaviour
             _player = other.GetComponent<PlayerController>();
             _attacher = _player.Attach();
             _state = States.AttachedToPlayer;
-            plantZone.GetComponent<BoxCollider2D>().enabled = true;
+            plantZone.GetComponent<PolygonCollider2D>().enabled = true;
         }
 
         if (_state == States.AttachedToPlayer && other.CompareTag("Terrain"))
@@ -68,7 +72,7 @@ public class Seed : MonoBehaviour
     }
     private void StartPlant()
     {
-        plantZone.GetComponent<BoxCollider2D>().enabled = false;
+        plantZone.GetComponent<PolygonCollider2D>().enabled = false;
         _state = States.Planted;
         StartCoroutine(Plant());
     }
@@ -76,7 +80,10 @@ public class Seed : MonoBehaviour
     {
         //Implementar que se active la animacion de plantar
         enableDragAndDrop?.Invoke(false);
+        AnimController.Instance.PlayPickUpAnimation();
         yield return new WaitForSeconds(timeToPlant);
+        _spriteRenderer.sprite = plant;
+        AnimController.Instance.PlayIdleAnimation();
         seedCounter?.Invoke(1);
         DragAndDrop.OnMouseUpAction -= StartPlant;
         _player.IsAttached = false;

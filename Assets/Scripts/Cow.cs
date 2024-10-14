@@ -11,6 +11,7 @@ public class Cow : MonoBehaviour
     [SerializeField] private RandomPointInSquare _randomPointInSquare;
     public static Action<float,GameObject> eatTerrain;
     public static Action<int> cowAmount;
+    public static Action cowHit;
     private int numberOfHitMax;
     private int numberOfHitMin;
     private int numberOfHits;
@@ -41,7 +42,7 @@ public class Cow : MonoBehaviour
             case State.WalkingFree:
                 if (distanceToTarget < 0.1f)
                 {
-                    SetTargetPoint(-3f,8f, -4.3f, 2f);
+                    SetTargetPoint(-1.5f,8f, -4.3f, 2f);
                 }
                 break;
             case State.WalkingToCorral:
@@ -69,6 +70,8 @@ public class Cow : MonoBehaviour
             if (other.TryGetComponent<PlayerController>(out var playerController) && !playerController.IsAttached)
             {
                 numberOfHits--;
+                AudioManager.Instance.PlaySound(0,false);
+                cowHit?.Invoke();
                 if (numberOfHits <= 0)
                 {
                     cowAmount?.Invoke(1);
@@ -88,7 +91,7 @@ public class Cow : MonoBehaviour
         timeToEatTerrain = _levelSettings.cowSettings.timeToEatTerrain;
 
         SetStartValues();
-        SetTargetPoint(-3f, 8f, -4.3f, 2f);
+        SetTargetPoint(-1.5f, 8f, -4.3f, 2f);
         SetHitNumbers();
     }
 
