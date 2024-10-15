@@ -21,12 +21,16 @@ public class LevelController : MonoBehaviour
     [SerializeField] private EnemyFarmersController enemyFarmersController;
 
     [SerializeField] private bool hasFarmers;
+
+    [SerializeField] private bool isFirstLevel;
     // Start is called before the first frame update
     void Start()
     {
-        Initialize();
-        Cow.eatTerrain += EatTerrain;
-        Seed.increaseRegeneration += IncreaseRegeneration;
+        if (!isFirstLevel)
+        {
+            Initialize();
+        }
+        
     }
 
     public void EatTerrain(float percent,GameObject cow)
@@ -55,7 +59,7 @@ public class LevelController : MonoBehaviour
 
     IEnumerator CheckTerrainPercentage()
     {
-        while (_terrainController.GetCurrentTerrainPercentage()<_levelSettings.seedSettings.percentajeToFirstSpawn)
+        while (_terrainController.GetCurrentTerrainPercentage()<_levelSettings.pointsSettings.objectivePercentageToGetPoints)
         {
             //print($"Estoy en el bucle {_terrainController.GetCurrentTerrainPercentage()}");
             yield return null;
@@ -67,20 +71,7 @@ public class LevelController : MonoBehaviour
 
     public void Initialize()
     {
-        _cowController.Initialize();
-        _seedController.Initialize();
-        _playerController.Initialize();
-        _terrainController.Initialize();
-        _pointsSystem.Initialize();
-        _uiManager.Initialize();
-        StartCoroutine(CheckTerrainPercentage());
-        StartCoroutine(CheckTerrainRegeneration());
-        StartCoroutine(CheckCowForSeed());
-        if (hasFarmers)
-        {
-            StartCoroutine(CheckFarmerCow());
-            StartCoroutine(CheckFarmerSeed());
-        }
+        StartCoroutine(WaitingBeforeStart());
     }
 
     IEnumerator CheckFarmerCow()
@@ -97,7 +88,7 @@ public class LevelController : MonoBehaviour
     IEnumerator CheckFarmerSeed()
     {
         int seedA = _levelSettings.farmerSettings.seedAmountNeed;
-        while (_uiManager.SeedAmount<seedA)
+        while (_uiManager.SeedAmount < seedA)
         {
             yield return null;
         }
@@ -115,6 +106,48 @@ public class LevelController : MonoBehaviour
         _terrainController.EnableTerrainRegenaration(true);
     }
 
+    IEnumerator WaitingBeforeStart()
+    {
+        _terrainController.Initialize();
+        yield return new WaitForSeconds(3);
+        
+        Cow.eatTerrain += EatTerrain;
+        Seed.increaseRegeneration += IncreaseRegeneration;
+        UIManager.OnGameEnded += CheckVictory;
+        _cowController.Initialize();
+        _seedController.Initialize();
+        _playerController.Initialize();
+        _pointsSystem.Initialize();
+        _uiManager.Initialize();
+        //StartCoroutine(CheckTerrainPercentage());
+        StartCoroutine(CheckTerrainRegeneration());
+        StartCoroutine(CheckCowForSeed());
+        if (hasFarmers)
+        {
+            StartCoroutine(CheckFarmerCow());
+            StartCoroutine(CheckFarmerSeed());
+        }
+    }
+
+    public void CheckVictory(bool reachedCow)
+    {
+        Conclude();
+        if (!reachedCow)
+        {
+            _uiManager.ShowResult(false);
+            return;
+        }
+
+        if (_terrainController.GetCurrentTerrainPercentage() <
+            _levelSettings.pointsSettings.objectivePercentageToGetPoints)
+        {
+            _uiManager.ShowResult(false);
+            return;
+        }
+        
+        _uiManager.ShowResult(true);
+    }
+
     public void Conclude()
     {
         _cowController.Conclude();
@@ -122,5 +155,9 @@ public class LevelController : MonoBehaviour
         _playerController.Conclude();
         _terrainController.Conclude();
         _uiManager.Conclude();
+        _pointsSystem.Conclude();
+        enemyFarmersController.Conclude(0);
+        enemyFarmersController.Conclude(1);
+        StopAllCoroutines();
     }
 }

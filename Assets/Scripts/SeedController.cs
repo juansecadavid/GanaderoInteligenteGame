@@ -45,6 +45,9 @@ public class SeedController : MonoBehaviour
 
     public void Conclude()
     {
-        
+        foreach (GameObject seed in _seedPool)
+        {
+            seed.GetComponent<Seed>().Conclude();
+        }
     }
 }

@@ -83,7 +83,7 @@ public class EnemyFarmerCows : EnemyFarmerBase
 
     public override void Conclude()
     {
-        StopCoroutine(releaseCoroutine);
+        StopAllCoroutines();
         base.Conclude();
     }
 }

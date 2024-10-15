@@ -48,6 +48,10 @@ public class CowController : MonoBehaviour
 
     public void Conclude()
     {
+        foreach (GameObject cow in _cowPool)
+        {
+            cow.GetComponent<Cow>().Conclude();
+        }
         StopCoroutine(_coroutine);
     }
 }

@@ -30,6 +30,11 @@ public class Seed : MonoBehaviour
         percentajeToIncrease = _levelSettings.seedSettings.percentajeToRegenerationIncrease;
         timeToPlant = _levelSettings.seedSettings.timeToPlant;
     }
+
+    public void Conclude()
+    {
+        StopAllCoroutines();
+    }
     void Update()
     {
         switch (_state)

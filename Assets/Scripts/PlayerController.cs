@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] public GameObject attacher;
     [SerializeField] private DragAndDrop _dragAndDrop;
+    [SerializeField] private AnimController _animController;
     public bool IsAttached { get;  set; }
 
 
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour
     public void Conclude()
     {
         Seed.enableDragAndDrop -= EnableDragAndDrop;
+        _dragAndDrop.isEnabled = false;
+        _animController.PlayIdleAnimation();
     }
     private void EnableDragAndDrop(bool enable)
     {

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,7 +13,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timeTxt;
     [SerializeField] private TextMeshProUGUI cowTxt;
     [SerializeField] private TextMeshProUGUI seedTxt;
+    [SerializeField] private GameObject WinScreen;
+    [SerializeField] private GameObject LooseScreen;
+    public static Action<bool> OnGameEnded;
     private float timeRemaining;
+    private int totalCows = 0;
+    private int currentPoints;
     public int CowAmount { get; private set; }
     public int SeedAmount { get; private set; }
 
@@ -23,7 +30,10 @@ public class UIManager : MonoBehaviour
         CowAmount = 0;
         SeedAmount = 0;
         timeRemaining = _levelSettings.gameLevelSettings.levelDuration;
-        if (pointsTxt != null) pointsTxt.text = $"{PointsSystem.Points}";
+        LevelSettings.GameLevelSettings gameLevelSettings= _levelSettings.gameLevelSettings;
+        totalCows = gameLevelSettings.totalCommonCows + gameLevelSettings.totalHungryCows +
+                        gameLevelSettings.totalSpecialCows;
+        if (pointsTxt != null) pointsTxt.text = "0";
         StartCoroutine(LevelTimer());
     }
 
@@ -35,6 +45,7 @@ public class UIManager : MonoBehaviour
     
     void UpdatePoints(int newPoints)
     {
+        currentPoints = newPoints;
         pointsTxt.text = $"{newPoints}";
     }
 
@@ -42,8 +53,24 @@ public class UIManager : MonoBehaviour
     {
         CowAmount += amount;
         cowTxt.text = $"{CowAmount}";
+        if(CowAmount>=totalCows)
+            OnGameEnded?.Invoke(true);
     }
-    
+
+    public void ShowResult(bool hasWon)
+    {
+        if (hasWon)
+        {
+            WinScreen.SetActive(true);
+            WinScreen.transform.Find("ScoreTxt").GetComponent<TextMeshProUGUI>().text = $"Score\n{currentPoints}";
+            
+        }
+        else
+        {
+            LooseScreen.SetActive(true); 
+            LooseScreen.transform.Find("ScoreTxt").GetComponent<TextMeshProUGUI>().text = $"Score\n{currentPoints}";
+        }
+    }
 
     IEnumerator LevelTimer()
     {
@@ -61,6 +88,7 @@ public class UIManager : MonoBehaviour
         }
         
         timeTxt.text = "0:00";
+        OnGameEnded?.Invoke(false);
     }
 
     public void Conclude()

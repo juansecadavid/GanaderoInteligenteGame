@@ -34,8 +34,12 @@ public class Cow : MonoBehaviour
         Vector2 direction = (_currentTarget - currentPosition).normalized;
         
         Vector2 newPosition = currentPosition + direction * (_speed * Time.fixedDeltaTime);
+
+        if (_state != State.gameEnded)
+        {
+            transform.position = newPosition;
+        }
         
-        transform.position = newPosition;
         
         switch (_state)
         {
@@ -61,6 +65,9 @@ public class Cow : MonoBehaviour
                     _currentTarget = (_randomPointInPolygon.GetRandomPoint());
                 }
                 break;
+            case State.gameEnded:
+                direction = Vector2.zero;
+                break;
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -74,11 +81,11 @@ public class Cow : MonoBehaviour
                 cowHit?.Invoke();
                 if (numberOfHits <= 0)
                 {
-                    cowAmount?.Invoke(1);
                     _state = State.WalkingToCorral;
                     _speed = 2f;
                     _currentTarget = _randomPointInPolygon.GetRandomPoint();
                     gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    cowAmount?.Invoke(1);
                 }
             }
         }
@@ -93,6 +100,12 @@ public class Cow : MonoBehaviour
         SetStartValues();
         SetTargetPoint(-1.5f, 8f, -4.3f, 2f);
         SetHitNumbers();
+    }
+
+    public void Conclude()
+    {
+        StopAllCoroutines();
+        _state = State.gameEnded;
     }
 
     private void SetStartValues()
@@ -158,5 +171,6 @@ public enum State
 {
     WalkingFree,
     WalkingToCorral,
-    InCorral
+    InCorral,
+    gameEnded
 }

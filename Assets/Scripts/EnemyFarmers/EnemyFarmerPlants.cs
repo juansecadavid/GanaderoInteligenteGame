@@ -60,6 +60,7 @@ public class EnemyFarmerPlants : EnemyFarmerBase
 
     public override void Conclude()
     {
+        StopAllCoroutines();
         base.Conclude();
     }
 }

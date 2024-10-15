@@ -76,10 +76,26 @@ public class LevelSettings : ScriptableObject
         [Tooltip("Cantidad de semillas plantadas necesarias para activarse)")]
         public int seedAmountNeed = 2;
     }
+    
+    [System.Serializable]
+    public class PointsSettings
+    {
+        [Tooltip("Cantidad de puntos por cada vaca que entra al corral)")]
+        public int cowPoints = 2;
+        [Tooltip("Cantidad de puntos por cada semilla sembrada)")]
+        public int seedPoints = 2;
+        [Tooltip("Cantidad de puntos por cada x segundos que pase el jugador por encima del porcentaje objetivo")] 
+        public int terrainPoints = 2;
+        [Tooltip("Porcentaje necesario de terreno para obtener puntos)")]
+        public int objectivePercentageToGetPoints = 2;
+        [Tooltip("Cada cuantos segundos el jugador obtiene puntos despues de superar el porcentaje objetivo")]
+        public int TimeToCheckPoints = 2;
+    }
 
     public TerrainSettings terrainSettings;
     public CowSettings cowSettings;
     public GameLevelSettings gameLevelSettings;
     public SeedSettings seedSettings;
     public FarmerSettings farmerSettings;
+    public PointsSettings pointsSettings;
 }

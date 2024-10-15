@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+using Random = UnityEngine.Random;
 
 public class TerrainController : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class TerrainController : MonoBehaviour
 
     [SerializeField] private float minTerrainValue;
     [SerializeField] private float maxTerrainValue;
+
+    public static Action<int> OnTerrainPercentageChanged;
 
     private float regenerationRate;
     private float currentGrassSize;
@@ -111,6 +115,7 @@ public class TerrainController : MonoBehaviour
         currentGrassSize = Mathf.Clamp(targetGrassSize, minTerrainValue, maxTerrainValue);
         grassTerrainSR.size = new Vector2(grassTerrainSR.size.x, currentGrassSize);
         grassTerrainSlider.value = currentGrassSize;
+        OnTerrainPercentageChanged?.Invoke(GetCurrentTerrainPercentage());
 
         isUpdating = false;
     }

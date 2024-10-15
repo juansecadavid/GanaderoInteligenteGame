@@ -44,3 +44,9 @@ MonoBehaviour:
   farmerSettings:
     cowAmountNeed: 5
     seedAmountNeed: 3
+  pointsSettings:
+    cowPoints: 100
+    seedPoints: 200
+    terrainPoints: 400
+    objectivePercentageToGetPoints: 20
+    TimeToCheckPoints: 2

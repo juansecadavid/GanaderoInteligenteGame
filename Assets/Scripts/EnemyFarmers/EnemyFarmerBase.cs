@@ -108,7 +108,7 @@ public class EnemyFarmerBase : MonoBehaviour
     {
         isDestroying = false;
         isChasedAway = false;
-        StopCoroutine(destroyingCoroutine);
+        StopAllCoroutines();
         gameObject.SetActive(false);
     }
 }
