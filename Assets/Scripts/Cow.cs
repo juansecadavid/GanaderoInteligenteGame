@@ -77,7 +77,6 @@ public class Cow : MonoBehaviour
             if (other.TryGetComponent<PlayerController>(out var playerController) && !playerController.IsAttached)
             {
                 numberOfHits--;
-                AudioManager.Instance.PlaySound(0,false);
                 cowHit?.Invoke();
                 if (numberOfHits <= 0)
                 {

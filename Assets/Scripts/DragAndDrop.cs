@@ -29,6 +29,7 @@ public class DragAndDrop : MonoBehaviour
         // Calcular la diferencia entre la posición del objeto y la del mouse
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         offset = transform.position - mousePos;
+        currentDirection = Direction.None;
     }
 
     // Actualizar la posición mientras se mantiene el clic

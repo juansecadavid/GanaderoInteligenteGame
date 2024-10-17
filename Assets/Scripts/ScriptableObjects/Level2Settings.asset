@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 574393eed427ce944b2386d4941eb67e, type: 3}
+  m_Name: Level2Settings
+  m_EditorClassIdentifier: 
+  terrainSettings:
+    regerationTime: 6
+    regenerationPercentage: 10
+    degradationPercentage: 3
+    degradationTime: 5
+  cowSettings:
+    timeToSpawnFirstCow: 2
+    timeToLastSpawn: 4
+    minimunHitsToGo: 3
+    maximumHitsToGo: 6
+    timeToEatTerrain: 2
+    commonPercentajeWhenEat: 2
+    hungryPercentajeWhenEat: 3
+    specialPercentajeWhenEat: 5
+    commonCowSpeed: 1
+    hungryCowSpeed: 1
+    specialCowSpeed: 3
+  gameLevelSettings:
+    levelDuration: 60
+    totalCommonCows: 10
+    totalHungryCows: 2
+    totalSpecialCows: 2
+    totalSeeds: 3
+  seedSettings:
+    timeToLastSpawn: 10
+    percentajeToFirstSpawn: 20
+    percentajeToRegenerationIncrease: 5
+    timeToPlant: 2
+    cowsToFirstSpawn: 4
+  farmerSettings:
+    cowAmountNeed: 5
+    seedAmountNeed: 3
+  pointsSettings:
+    cowPoints: 100
+    seedPoints: 200
+    terrainPoints: 400
+    objectivePercentageToGetPoints: 20
+    TimeToCheckPoints: 2

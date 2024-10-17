@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
 
     [SerializeField] private EnemyFarmersController enemyFarmersController;
+
+    [SerializeField] private AudioManager _audioManager;
 
     [SerializeField] private bool hasFarmers;
 
@@ -119,6 +122,7 @@ public class LevelController : MonoBehaviour
         _playerController.Initialize();
         _pointsSystem.Initialize();
         _uiManager.Initialize();
+        _audioManager.Initialize();
         //StartCoroutine(CheckTerrainPercentage());
         StartCoroutine(CheckTerrainRegeneration());
         StartCoroutine(CheckCowForSeed());
@@ -156,8 +160,25 @@ public class LevelController : MonoBehaviour
         _terrainController.Conclude();
         _uiManager.Conclude();
         _pointsSystem.Conclude();
+        _audioManager.Conclude();
         enemyFarmersController.Conclude(0);
         enemyFarmersController.Conclude(1);
         StopAllCoroutines();
+    }
+
+    public void OpenScene(int scene)
+    {
+        switch (scene)
+        {
+            case 1:
+                SceneManager.LoadScene("FirstLevelScene");
+                break;
+            case 2:
+                SceneManager.LoadScene("SecondLevelScene");
+                break;
+            case 3:
+                SceneManager.LoadScene("ThirdLevelScene");
+                break;
+        }
     }
 }

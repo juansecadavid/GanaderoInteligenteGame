@@ -3725,7 +3725,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5117,13 +5117,13 @@ MonoBehaviour:
   _terrainController: {fileID: 1990225708}
   _seedController: {fileID: 403487556}
   _playerController: {fileID: 252707630}
-  _levelSettings: {fileID: 11400000, guid: cd6829835e80b9e4a9fa13d891a10459, type: 2}
+  _levelSettings: {fileID: 11400000, guid: ba3344d68b74a1649b601b6ac184bfd9, type: 2}
   _pointsSystem: {fileID: 1909069454}
   _uiManager: {fileID: 709361603}
   enemyFarmersController: {fileID: 1828268740}
   _audioManager: {fileID: 190523333}
-  hasFarmers: 0
-  isFirstLevel: 1
+  hasFarmers: 1
+  isFirstLevel: 0
 --- !u!4 &896884919
 Transform:
   m_ObjectHideFlags: 0
@@ -6647,7 +6647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1232086941
 RectTransform:
   m_ObjectHideFlags: 0
