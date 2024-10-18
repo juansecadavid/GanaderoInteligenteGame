@@ -22,10 +22,20 @@ public class EnemyFarmerBase : MonoBehaviour
     protected bool isChasedAway;
     private bool hasChanged = false;
 
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public virtual void Initialize()
     {
         transform.position = movePoints[Random.Range(0, movePoints.Length)].position;
         gameObject.SetActive(true);
+        spriteRenderer.flipX = false;
     }
 
     protected void MoveToTarget(Transform targetPos)
@@ -34,6 +44,8 @@ public class EnemyFarmerBase : MonoBehaviour
 
         startPos = transform.position;
         StartCoroutine(MoveOverTime(targetPos.position));
+
+        animator.SetBool("Destroying", false);
     }
 
     private IEnumerator MoveOverTime(Vector3 targetPos)
@@ -57,6 +69,7 @@ public class EnemyFarmerBase : MonoBehaviour
     protected virtual void Destroy()
     {
         isDestroying = true;
+        animator.SetBool("Destroying", true);
         destroyingCoroutine = StartCoroutine(Destroying());
     }
 
@@ -101,6 +114,7 @@ public class EnemyFarmerBase : MonoBehaviour
     {
         isDestroying = false;
         isChasedAway = true;
+        spriteRenderer.flipX = true;
         MoveToTarget(movePoints[Random.Range(0, movePoints.Length)]);
     }
 
@@ -108,6 +122,7 @@ public class EnemyFarmerBase : MonoBehaviour
     {
         isDestroying = false;
         isChasedAway = false;
+        spriteRenderer.flipX = false;
         StopAllCoroutines();
         gameObject.SetActive(false);
     }
