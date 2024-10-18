@@ -56,6 +56,7 @@ public class LevelSettings : ScriptableObject
         public float regenerationPercentage;
         public float degradationPercentage;
         public float degradationTime;
+        public int numberOfBadTerrain;
     }
     
     [System.Serializable]
