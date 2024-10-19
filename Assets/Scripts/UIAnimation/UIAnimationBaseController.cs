@@ -6,6 +6,7 @@ public class UIAnimationBaseController : MonoBehaviour
 {
     [SerializeField] protected bool enableInStart;
     [SerializeField] protected float speed;
+    [SerializeField] protected LeanTweenType type;
 
     protected LTDescr tween;
 
@@ -29,6 +30,11 @@ public class UIAnimationBaseController : MonoBehaviour
 
     public virtual void Conclude()
     {
+        if (tween != null)
+        {
+            LeanTween.cancel(tween.uniqueId);
+        }
+
         gameObject.SetActive(false);
     }
 }

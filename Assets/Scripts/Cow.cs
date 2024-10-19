@@ -32,6 +32,7 @@ public class Cow : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        animator.enabled = true;
     }
 
 
@@ -139,6 +140,11 @@ public class Cow : MonoBehaviour
                     _currentTarget = _randomPointInPolygon.GetRandomPoint();
                     gameObject.GetComponent<BoxCollider2D>().enabled = false;
                     cowAmount?.Invoke(1);
+
+                    bool enableWord = Random.Range(0, 2) == 0;
+
+                    if (enableWord)
+                        playerController.GetComponentInChildren<PlayerWordsController>().EnableWord();
                 }
             }
         }
@@ -159,6 +165,7 @@ public class Cow : MonoBehaviour
     {
         StopAllCoroutines();
         _state = State.gameEnded;
+        animator.enabled = false;
     }
 
     private void SetStartValues()

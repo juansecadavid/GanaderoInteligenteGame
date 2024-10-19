@@ -17,10 +17,10 @@ public class UIMoveAnimationController : UIAnimationBaseController
 
     public override void Conclude()
     {
-        if (tween != null)
-        {
-            LeanTween.cancel(tween.uniqueId);
-        }
+        //if (tween != null)
+        //{
+        //    LeanTween.cancel(tween.uniqueId);
+        //}
 
         tween = LeanTween.moveLocal(gameObject, startPos, speed).setOnComplete(()=> base.Conclude());
     }
