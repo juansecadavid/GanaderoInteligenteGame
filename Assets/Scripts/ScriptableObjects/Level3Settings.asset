@@ -17,6 +17,7 @@ MonoBehaviour:
     regenerationPercentage: 10
     degradationPercentage: 3
     degradationTime: 5
+    numberOfBadTerrain: 12
   cowSettings:
     timeToSpawnFirstCow: 2
     timeToLastSpawn: 4
