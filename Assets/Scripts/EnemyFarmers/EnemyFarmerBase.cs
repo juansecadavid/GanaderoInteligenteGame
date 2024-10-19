@@ -122,7 +122,6 @@ public class EnemyFarmerBase : MonoBehaviour
     {
         isDestroying = false;
         isChasedAway = false;
-        spriteRenderer.flipX = false;
         StopAllCoroutines();
         gameObject.SetActive(false);
     }

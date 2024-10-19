@@ -1,68 +1,121 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Cow : MonoBehaviour
 {
-    [SerializeField] private LevelSettings _levelSettings;
-    [SerializeField] private GetRandomPointInPolygon _randomPointInPolygon;
-    [SerializeField] private RandomPointInSquare _randomPointInSquare;
     public static Action<float,GameObject> eatTerrain;
     public static Action<int> cowAmount;
     public static Action cowHit;
+    public float _speed;
+
+    [SerializeField] private LevelSettings _levelSettings;
+    [SerializeField] private GetRandomPointInPolygon _randomPointInPolygon;
+    [SerializeField] private RandomPointInSquare _randomPointInSquare;
+    [SerializeField] private Type _type;
+
     private int numberOfHitMax;
     private int numberOfHitMin;
     private int numberOfHits;
-    float timeToEatTerrain;
+    private float timeToEatTerrain;
     private float percentajeWhenEat;
     private Vector2 _currentTarget;
-    public float _speed;
-    [SerializeField] private Type _type;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+
 
     private State _state = State.WalkingFree;
     public State State {  get { return _state; } }
 
-    
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+    }
+
+
     void FixedUpdate()
     {
         Vector2 currentPosition = transform.position;
-        
+
         float distanceToTarget = Vector2.Distance(currentPosition, _currentTarget);
-        
+
         Vector2 direction = (_currentTarget - currentPosition).normalized;
-        
+
         Vector2 newPosition = currentPosition + direction * (_speed * Time.fixedDeltaTime);
 
         if (_state != State.gameEnded)
         {
             transform.position = newPosition;
         }
-        
-        
+
+        // Check if the cow is moving to the left or right
+        if (direction.x > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else if (direction.x < 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+
         switch (_state)
         {
             case State.WalkingFree:
                 if (distanceToTarget < 0.1f)
                 {
-                    SetTargetPoint(-1.5f,8f, -4.3f, 2f);
+                    SetTargetPoint(-1.5f, 8f, -4.3f, 2f);
                 }
                 break;
             case State.WalkingToCorral:
                 if (distanceToTarget < 0.1f)
                 {
-                    //SetTargetPoint(-8.2f,-3.5f, 2f, 4.3f);
-                    _currentTarget = (_randomPointInPolygon.GetRandomPoint());
+                    _currentTarget = _randomPointInPolygon.GetRandomPoint();
                     _state = State.InCorral;
                 }
                 break;
             case State.InCorral:
                 if (distanceToTarget < 0.1f)
                 {
-                    //SetTargetPoint(-8.2f,-3.5f, 2f, 4.3f);
-                    _speed = 0.5f;
-                    _currentTarget = (_randomPointInPolygon.GetRandomPoint());
+                    int currentAction = Random.Range(0, 3);
+                    print("currentAction: " + currentAction);
+
+                    switch (currentAction)
+                    {
+                        case 0:
+                            if (!animator.GetBool("Muu") && !animator.GetBool("Eating"))
+                            {
+                                InCorral();
+                            }
+                            break;
+
+                        case 1:
+                            if (!animator.GetBool("Muu"))
+                            {
+                                _speed = 0f;
+                                animator.SetBool("Muu", true);
+                                LeanTween.delayedCall(2f, InCorral);
+                            }
+                            break;
+
+                        case 2:
+                            if (!animator.GetBool("Eating"))
+                            {
+                                _speed = 0f;
+                                animator.SetBool("Eating", true);
+                                LeanTween.delayedCall(2f, InCorral);
+                            }
+                            break;
+                    }
+
+                    void InCorral()
+                    {
+                        animator.SetBool("Muu", false);
+                        animator.SetBool("Eating", false);
+                        _speed = 0.5f;
+                        _currentTarget = _randomPointInPolygon.GetRandomPoint();
+                    }
                 }
                 break;
             case State.gameEnded:
@@ -70,6 +123,7 @@ public class Cow : MonoBehaviour
                 break;
         }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (_state == State.WalkingFree && other.gameObject.CompareTag("Player"))

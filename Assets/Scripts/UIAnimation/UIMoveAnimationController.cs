@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class UIMoveAnimationController : UIAnimationBaseController
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Vector2 startPos;
+    [SerializeField] private Vector2 targetPos;
+
+    public override void Initialize()
     {
-        
+        transform.localPosition = startPos;
+        base.Initialize();
+
+        tween = LeanTween.moveLocal(gameObject, targetPos, speed);
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Conclude()
     {
-        
+        if (tween != null)
+        {
+            LeanTween.cancel(tween.uniqueId);
+        }
+
+        tween = LeanTween.moveLocal(gameObject, startPos, speed).setOnComplete(()=> base.Conclude());
     }
 }
