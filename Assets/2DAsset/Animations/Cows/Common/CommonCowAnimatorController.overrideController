@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CommonCowAnimatorController
+  m_Controller: {fileID: 9100000, guid: b9698800ea887444cb76981716319c5a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: c93aeca205e59054396d67a73ecbaf36, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 87da5b0b4790b39468a57f56bc85e1a7, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: adb2537c90ac2104e99494199697ac08, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 44ea0d1be1a4d84499bad6ad8d36f0d5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 1b674d4628db2914988c95df9d0c8db1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 937104885d17c894e8d59d6dee8940fe, type: 2}
