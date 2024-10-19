@@ -31,11 +31,11 @@ MonoBehaviour:
     hungryCowSpeed: 1
     specialCowSpeed: 3
   gameLevelSettings:
-    levelDuration: 60
-    totalCommonCows: 10
-    totalHungryCows: 2
-    totalSpecialCows: 2
-    totalSeeds: 3
+    levelDuration: 120
+    totalCommonCows: 14
+    totalHungryCows: 10
+    totalSpecialCows: 6
+    totalSeeds: 8
   seedSettings:
     timeToLastSpawn: 10
     percentajeToFirstSpawn: 20
