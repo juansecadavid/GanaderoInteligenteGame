@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PoolingAndEnabling : MonoBehaviour
 {
+    [SerializeField] private RectTransform specialCowSticker;
+
     public List<GameObject> InstantiatePool(int x, GameObject gameObject)
     {
         List<GameObject> instantiatedList = new List<GameObject>();
@@ -82,6 +84,26 @@ public class PoolingAndEnabling : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
             previousTime = times[i];
             gameObjectsList[i].SetActive(true);
+
+            if (gameObjectsList[i].name.Contains("CowSpecial"))
+            {
+                if (!specialCowSticker.gameObject.activeInHierarchy)
+                {
+                    UIAnimationBaseController[] specialCowStickerAnimations = specialCowSticker.GetComponents<UIAnimationBaseController>();
+
+                    if (specialCowStickerAnimations.Length > 0)
+                    {
+                        foreach (UIAnimationBaseController stickerAnimation in specialCowStickerAnimations)
+                        {
+
+                            stickerAnimation.Initialize();
+                        }
+
+                        LeanTween.delayedCall(3f, () => specialCowSticker.gameObject.SetActive(false));
+                    }
+                }
+                
+            }
             //Debug.Log("Impresión " + (i + 1) + " en el tiempo " + times[i]);
         }
     }

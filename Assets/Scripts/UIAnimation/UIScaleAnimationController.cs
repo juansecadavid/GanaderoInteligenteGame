@@ -17,7 +17,7 @@ public class UIScaleAnimationController : UIAnimationBaseController
             LeanTween.cancel(tween.uniqueId);
         }
 
-        tween = LeanTween.scale(gameObject, targetScale, speed).setEase(type);
+        tween = LeanTween.scale(gameObject, targetScale, speed).setEase(type).setDelay(delay);
     }
 
     public override void Conclude()

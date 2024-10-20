@@ -12,16 +12,11 @@ public class UIMoveAnimationController : UIAnimationBaseController
         transform.localPosition = startPos;
         base.Initialize();
 
-        tween = LeanTween.moveLocal(gameObject, targetPos, speed);
+        tween = LeanTween.moveLocal(gameObject, targetPos, speed).setDelay(delay);
     }
 
     public override void Conclude()
     {
-        //if (tween != null)
-        //{
-        //    LeanTween.cancel(tween.uniqueId);
-        //}
-
         tween = LeanTween.moveLocal(gameObject, startPos, speed).setOnComplete(()=> base.Conclude());
     }
 }

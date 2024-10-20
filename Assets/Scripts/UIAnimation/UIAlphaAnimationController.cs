@@ -37,7 +37,7 @@ public class UIAlphaAnimationController : UIAnimationBaseController
             .setOnUpdate((float value) => {
                 currentColor.a = value;
                 image.color = currentColor;
-            }).setOnComplete(()=>ChangeAlpha(targetValue, speed));
+            }).setDelay(delay).setOnComplete(()=>ChangeAlpha(targetValue, speed));
     }
 
     public override void Conclude()

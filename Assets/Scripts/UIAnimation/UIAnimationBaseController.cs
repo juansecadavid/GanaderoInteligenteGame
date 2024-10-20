@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIAnimationBaseController : MonoBehaviour
 {
     [SerializeField] protected bool enableInStart;
+    [SerializeField] protected float delay;
     [SerializeField] protected float speed;
     [SerializeField] protected LeanTweenType type;
 
