@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioClip[] musicClips;
     [SerializeField] private AudioClip[] soundClips;
+    private bool isPLayingSound;
 
     public static AudioManager Instance { get; private set; }
 
@@ -47,9 +48,9 @@ public class AudioManager : MonoBehaviour
 
     void ShouldPlaySound()
     {
-        print("Llame a que suene");
-        if (Random.Range(0, 3) == 0)
+        if (!isPLayingSound&&Random.Range(0, 3) == 0)
         {
+            isPLayingSound = true;
             PlayRandomSound();
         }
     }
@@ -90,6 +91,7 @@ public class AudioManager : MonoBehaviour
     {
         yield return new WaitWhile(() => source.isPlaying);
 
+        isPLayingSound = false;
         source.clip = null;
         activeAudioSources.Remove(source);
         audioSourcePool.Enqueue(source);

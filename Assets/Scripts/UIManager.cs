@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI seedTxt;
     [SerializeField] private GameObject WinScreen;
     [SerializeField] private GameObject LooseScreen;
+    [SerializeField] private GameObject winPanelScore;
+    [SerializeField] private GameObject loosePanelScore;
     public static Action<bool> OnGameEnded;
     private float timeRemaining;
     private int totalCows = 0;
@@ -62,13 +64,13 @@ public class UIManager : MonoBehaviour
         if (hasWon)
         {
             WinScreen.SetActive(true);
-            WinScreen.transform.Find("ScoreTxt").GetComponent<TextMeshProUGUI>().text = $"Score\n{currentPoints}";
+            winPanelScore.GetComponent<TextMeshProUGUI>().text = $"Score\n{currentPoints}";
             
         }
         else
         {
             LooseScreen.SetActive(true); 
-            LooseScreen.transform.Find("ScoreTxt").GetComponent<TextMeshProUGUI>().text = $"Score\n{currentPoints}";
+            loosePanelScore.GetComponent<TextMeshProUGUI>().text = $"Score\n{currentPoints}";
         }
     }
 
