@@ -40,7 +40,7 @@ MonoBehaviour:
     timeToLastSpawn: 10
     percentajeToFirstSpawn: 20
     percentajeToRegenerationIncrease: 5
-    timeToPlant: 2
+    timeToPlant: 1
     cowsToFirstSpawn: 4
   farmerSettings:
     cowAmountNeed: 5

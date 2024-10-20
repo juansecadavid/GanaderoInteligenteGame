@@ -133,6 +133,7 @@ public class Cow : MonoBehaviour
             {
                 numberOfHits--;
                 cowHit?.Invoke();
+                SetTargetPoint(-1.5f, 8f, -4.3f, 2f);
                 if (numberOfHits <= 0)
                 {
                     _state = State.WalkingToCorral;
