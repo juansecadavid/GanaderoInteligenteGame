@@ -154,6 +154,9 @@ public class LevelController : MonoBehaviour
 
     public void Conclude()
     {
+        Cow.eatTerrain -= EatTerrain;
+        Seed.increaseRegeneration -= IncreaseRegeneration;
+        UIManager.OnGameEnded -= CheckVictory;
         _cowController.Conclude();
         _seedController.Conclude();
         _playerController.Conclude();

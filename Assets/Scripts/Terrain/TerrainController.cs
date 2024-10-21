@@ -130,7 +130,7 @@ public class TerrainController : MonoBehaviour
     public void Conclude()
     {
         grassTerrainSlider.onValueChanged.RemoveListener(OnGrassValueChanged);
-
+        OnTerrainPercentageChanged = null;
         StopAllCoroutines();
     }
 

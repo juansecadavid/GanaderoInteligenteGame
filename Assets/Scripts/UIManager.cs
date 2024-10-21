@@ -17,10 +17,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject LooseScreen;
     [SerializeField] private GameObject winPanelScore;
     [SerializeField] private GameObject loosePanelScore;
-    public static Action<bool> OnGameEnded;
+    public static Action <bool> OnGameEnded;
+    public static Action<float> timeLeft;
     private float timeRemaining;
     private int totalCows = 0;
     private int currentPoints;
+    private float levelLenght;
     public int CowAmount { get; private set; }
     public int SeedAmount { get; private set; }
 
@@ -31,7 +33,8 @@ public class UIManager : MonoBehaviour
         Seed.seedCounter += UpdateSeedAmount;
         CowAmount = 0;
         SeedAmount = 0;
-        timeRemaining = _levelSettings.gameLevelSettings.levelDuration;
+        levelLenght = _levelSettings.gameLevelSettings.levelDuration;
+        timeRemaining = levelLenght;
         LevelSettings.GameLevelSettings gameLevelSettings= _levelSettings.gameLevelSettings;
         totalCows = gameLevelSettings.totalCommonCows + gameLevelSettings.totalHungryCows +
                         gameLevelSettings.totalSpecialCows;
@@ -79,7 +82,7 @@ public class UIManager : MonoBehaviour
         while (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-            
+            timeLeft?.Invoke(timeRemaining);
             int minutes = Mathf.FloorToInt(timeRemaining / 60);
             int seconds = Mathf.FloorToInt(timeRemaining % 60);
             
@@ -98,6 +101,8 @@ public class UIManager : MonoBehaviour
         PointsSystem.pointsChanged -= UpdatePoints;
         Cow.cowAmount -= UpdateCowAmount;
         Seed.seedCounter -= UpdateSeedAmount;
+        OnGameEnded = null;
+        timeLeft = null;
         
         StopAllCoroutines();
     }

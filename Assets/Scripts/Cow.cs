@@ -167,6 +167,9 @@ public class Cow : MonoBehaviour
         StopAllCoroutines();
         _state = State.gameEnded;
         animator.enabled = false;
+        eatTerrain = null;
+        cowAmount = null;
+        cowHit = null;
     }
 
     private void SetStartValues()

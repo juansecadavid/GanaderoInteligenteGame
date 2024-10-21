@@ -33,6 +33,10 @@ public class Seed : MonoBehaviour
 
     public void Conclude()
     {
+        seedCounter = null;
+        increaseRegeneration = null;
+        enableDragAndDrop = null;
+        DragAndDrop.OnMouseUpAction -= StartPlant;
         StopAllCoroutines();
     }
     void Update()

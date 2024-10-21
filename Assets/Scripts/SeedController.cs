@@ -13,6 +13,7 @@ public class SeedController : MonoBehaviour
     private List<GameObject> _seedPool;
     private float percentajeToFirstSeeed;
     float timeToLastSpawn;
+    private float timeLeft;
 
     public List<GameObject> SeedPool {  get { return _seedPool; } }
     
@@ -22,6 +23,7 @@ public class SeedController : MonoBehaviour
         timeToLastSpawn = _levelSettings.seedSettings.timeToLastSpawn;
         percentajeToFirstSeeed = _levelSettings.seedSettings.percentajeToFirstSpawn;
         _seedPool = _poolingAndEnabling.InstantiatePool(_poolLenght, _seedPrefab);
+        UIManager.timeLeft += UpdateTimeLeft;
         foreach (GameObject seed in _seedPool)
         {
             seed.GetComponent<Seed>().Initialize();
@@ -39,8 +41,12 @@ public class SeedController : MonoBehaviour
     public void StartSeedSpawn()
     {
         print("Llamé a las seed");
-        float timeLeft = _levelSettings.gameLevelSettings.levelDuration - Time.time;
         StartCoroutine(_poolingAndEnabling.ShowRandomTimes(_poolLenght,timeLeft, 0f,timeToLastSpawn,_seedPool));
+    }
+
+    private void UpdateTimeLeft(float timeLeft)
+    {
+        this.timeLeft = timeLeft;
     }
 
     public void Conclude()

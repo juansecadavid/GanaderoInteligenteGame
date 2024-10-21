@@ -85,6 +85,7 @@ public class PointsSystem : MonoBehaviour
         Cow.cowAmount -= AddCowPoints;
         Seed.seedCounter -= AddSeedPoints;
         TerrainController.OnTerrainPercentageChanged -= CheckNumber;
+        pointsChanged = null;
         StopAllCoroutines();
     }
 }
